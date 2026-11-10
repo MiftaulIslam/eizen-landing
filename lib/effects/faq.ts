@@ -172,13 +172,7 @@ function thread(scope: Scope, root: HTMLElement, calm: boolean) {
     });
   }
 
-  // The list is a row on phones (faq.css), so tell assistive tech which arrows apply.
-  if (list) {
-    const row = matchMedia("(max-width: 860px)");
-    const orient = () => list.setAttribute("aria-orientation", row.matches ? "horizontal" : "vertical");
-    orient();
-    scope.listen(row, "change", orient);
-  }
+  // The list stays vertical: on phones it moves into a bottom sheet (drawer.css), not a row.
 
   root.classList.add("ready");
 

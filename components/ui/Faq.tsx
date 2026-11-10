@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Arrow } from "@/components/parts/Arrow";
+import { Drawer } from "@/components/ui/Drawer";
 
 export type FaqItem = { q: string; a: ReactNode | string };
 
@@ -16,8 +17,9 @@ type Props = {
 };
 
 // The FAQ as a thread: questions are threads in a sidebar, picking one sends it and the
-// answer streams in (lib/effects/faq.ts). Every question and answer is in the HTML; without
-// JavaScript the sidebar hides and the panels read as one transcript.
+// answer streams in (lib/effects/faq.ts). On phones the sidebar is a bottom sheet opened from
+// an "All questions" bar above the thread (components/ui/Drawer.tsx). Every question and answer
+// is in the HTML; without JavaScript the sidebar hides and the panels read as one transcript.
 export function Faq({ items, id = "faq", label = "Questions", agent = "Eizen", next = "Ask the next question" }: Props) {
   // Questions with plain-text answers also go out as FAQPage data for search and AI answers.
   const plain = items.filter((item): item is { q: string; a: string } => typeof item.a === "string");
@@ -32,29 +34,50 @@ export function Faq({ items, id = "faq", label = "Questions", agent = "Eizen", n
   return (
     <div className="fq" data-faq>
       {schema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: schema }} />}
-      <div className="fq-side">
-        <p className="fq-top" aria-hidden="true">
-          <span>{label}</span>
-          <span>{items.length}</span>
-        </p>
-        <div className="fq-list" role="tablist" aria-label={label} aria-orientation="vertical">
-          {items.map((item, i) => (
-            <button
-              key={item.q}
-              type="button"
-              role="tab"
-              className="fq-tab"
-              id={`${id}-t${i}`}
-              aria-controls={`${id}-p${i}`}
-              aria-selected={i === 0}
-              tabIndex={i === 0 ? 0 : -1}
-            >
-              <span className="dot" aria-hidden="true" />
-              <span className="fq-tq">{item.q}</span>
-            </button>
-          ))}
+      <Drawer
+        id={`${id}-list`}
+        label={label}
+        title={label}
+        from={861}
+        trigger={
+          <>
+            <svg className="fq-dw-ic" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M2.5 4h11M2.5 8h11M2.5 12h7" />
+            </svg>
+            <span className="fq-dw-l">All questions</span>
+            <span className="fq-dw-n">{items.length}</span>
+            <svg className="fq-dw-ch" viewBox="0 0 10 6" aria-hidden="true">
+              <path d="M1 5l4-4 4 4" />
+            </svg>
+          </>
+        }
+      >
+        <div className="fq-side">
+          <p className="fq-top" aria-hidden="true">
+            <span>{label}</span>
+            <span>{items.length}</span>
+          </p>
+          <div className="fq-list" role="tablist" aria-label={label} aria-orientation="vertical">
+            {items.map((item, i) => (
+              <button
+                key={item.q}
+                type="button"
+                role="tab"
+                className="fq-tab"
+                style={{ "--i": i }}
+                data-drawer-close=""
+                id={`${id}-t${i}`}
+                aria-controls={`${id}-p${i}`}
+                aria-selected={i === 0}
+                tabIndex={i === 0 ? 0 : -1}
+              >
+                <span className="dot" aria-hidden="true" />
+                <span className="fq-tq">{item.q}</span>
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      </Drawer>
       <div className="fq-pane">
         <div className="fq-log">
           {items.map((item, i) => (

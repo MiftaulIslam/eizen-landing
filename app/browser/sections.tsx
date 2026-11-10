@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Arrow } from "@/components/parts/Arrow";
 import { Pointer } from "@/components/parts/Pointer";
 import { Button } from "@/components/ui/Button";
+import { Drawer } from "@/components/ui/Drawer";
 
 export function Hero() {
   return (
@@ -307,249 +308,25 @@ export function WhatYouCanDo() {
             <h2 className="d2">Point at the problem so you can stop describing it</h2>
           </div>
           {" "}
-          <p className="lead">Move over a tool to see it work.</p>
+          <p className="lead">Pick a tool to see it work.</p>
           {" "}
         </div>
         <div className="explore" data-explore="">
           {" "}
           <div>
-            <button type="button" className="ex-row">Pick an element</button>
-            <button type="button" className="ex-row">Mark up an area</button>
-            <button type="button" className="ex-row">Tweak it live</button>
-            <button type="button" className="ex-row">Record a bug</button>
-            <button type="button" className="ex-row">Check accessibility</button>
-            <button type="button" className="ex-row">Compare before and after</button>
-            <button type="button" className="ex-row">Device sizes</button>
+            <button type="button" className="ex-row" data-drawer-open="browser-tool" data-drawer-title="">Pick an element</button>
+            <button type="button" className="ex-row" data-drawer-open="browser-tool" data-drawer-title="">Mark up an area</button>
+            <button type="button" className="ex-row" data-drawer-open="browser-tool" data-drawer-title="">Tweak it live</button>
+            <button type="button" className="ex-row" data-drawer-open="browser-tool" data-drawer-title="">Record a bug</button>
+            <button type="button" className="ex-row" data-drawer-open="browser-tool" data-drawer-title="">Check accessibility</button>
+            <button type="button" className="ex-row" data-drawer-open="browser-tool" data-drawer-title="">Compare before and after</button>
+            <button type="button" className="ex-row" data-drawer-open="browser-tool" data-drawer-title="">Device sizes</button>
           </div>
           {" "}
-          <div className="ex-panes live">
-            <div className="ex-pane">
-              <div className="ui">
-                <div className="mb-page" style={{ "--h": "240px", containerType: "inline-size" }}>
-                  {" "}
-                  <div className="mb-side">
-                    <b>Harbor</b>
-                    <span className="on">Invoices</span>
-                    <span>Shipments</span>
-                    <span>Carriers</span>
-                  </div>
-                  {" "}
-                  <div className="mb-main">
-                    <div className="mb-h">
-                      Invoices
-                      <span className="mb-new">New invoice</span>
-                    </div>
-                    {" "}
-                    <table className="mb-t">
-                      <tbody>
-                        <tr>
-                          <td>INV-20418</td>
-                          <td>Northwind Foods</td>
-                          <td>$12,840.00</td>
-                          <td>
-                            <span className="pill l">late</span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>INV-20431</td>
-                          <td>Calder Steel</td>
-                          <td>$6,420.50</td>
-                          <td>
-                            <span className="pill o">open</span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>INV-20437</td>
-                          <td>Ostrava Glass</td>
-                          <td>$3,189.00</td>
-                          <td>
-                            <span className="pill p">paid</span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>INV-20452</td>
-                          <td>Lindqvist Timber</td>
-                          <td>$9,774.25</td>
-                          <td>
-                            <span className="pill o">open</span>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  {" "}
-                  <div className="mb-outline" style={{ opacity: "1", left: "112px", top: "14px", width: "92px", height: "26px", animation: "outline-move 4.2s var(--ease) infinite" }} />
-                </div>
-              </div>
-              <p className="ex-note">Sends its selector, markup, source file and a crop to the agent.</p>
-            </div>
-            <div className="ex-pane">
-              <div className="ui">
-                <div className="mb-page" style={{ "--h": "240px", containerType: "inline-size" }}>
-                  {" "}
-                  <div className="mb-side">
-                    <b>Harbor</b>
-                    <span className="on">Invoices</span>
-                    <span>Shipments</span>
-                    <span>Carriers</span>
-                  </div>
-                  {" "}
-                  <div className="mb-main">
-                    <div className="mb-h">
-                      Invoices
-                      <span className="mb-new">New invoice</span>
-                    </div>
-                    {" "}
-                    <table className="mb-t">
-                      <tbody>
-                        <tr>
-                          <td>INV-20418</td>
-                          <td>Northwind Foods</td>
-                          <td>$12,840.00</td>
-                          <td>
-                            <span className="pill l">late</span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>INV-20431</td>
-                          <td>Calder Steel</td>
-                          <td>$6,420.50</td>
-                          <td>
-                            <span className="pill o">open</span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>INV-20437</td>
-                          <td>Ostrava Glass</td>
-                          <td>$3,189.00</td>
-                          <td>
-                            <span className="pill p">paid</span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>INV-20452</td>
-                          <td>Lindqvist Timber</td>
-                          <td>$9,774.25</td>
-                          <td>
-                            <span className="pill o">open</span>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  {" "}
-                  <svg style={{ position: "absolute", inset: "0", width: "100%", height: "100%" }} viewBox="0 0 500 240" preserveAspectRatio="none">
-                    <path d="M250 150C300 110 350 70 430 44" fill="none" stroke="#e8553d" strokeWidth="3" strokeDasharray="420" strokeDashoffset="420" style={{ animation: "draw 2.4s var(--ease) infinite alternate" }} />
-                    <rect x="340" y="20" width="130" height="40" rx="4" fill="none" stroke="#e8553d" strokeWidth="2" />
-                  </svg>
-                </div>
-              </div>
-              <p className="ex-note">Arrows, boxes and labels, flattened into your message.</p>
-            </div>
-            <div className="ex-pane">
-              <div className="ui pad" style={{ minHeight: "240px", display: "grid", placeItems: "center", background: "#f6f7f9" }}>
-                <span style={{ background: "#10233a", color: "#fff", borderRadius: "6px", padding: "6px 10px", animation: "pad 3.2s var(--ease) infinite", outline: "1px dashed #5ec48a", outlineOffset: "2px" }}>New invoice</span>
-              </div>
-              <p className="ex-note">Drag padding or edit text, then send the exact changes.</p>
-            </div>
-            <div className="ex-pane">
-              <div className="ui pad" style={{ minHeight: "240px" }}>
-                <div className="row" style={{ padding: "7px 0", borderTop: "1px solid var(--uh)", animation: "tick-in 6s var(--ease) 0s infinite both" }}>
-                  <span className="m">1</span>
-                  Click New invoice
-                </div>
-                <div className="row" style={{ padding: "7px 0", borderTop: "1px solid var(--uh)", animation: "tick-in 6s var(--ease) 0.7s infinite both" }}>
-                  <span className="m">2</span>
-                  Type Calder Steel in Customer
-                </div>
-                <div className="row" style={{ padding: "7px 0", borderTop: "1px solid var(--uh)", animation: "tick-in 6s var(--ease) 1.4s infinite both" }}>
-                  <span className="m">3</span>
-                  Press Enter
-                </div>
-                <div className="row" style={{ padding: "7px 0", borderTop: "1px solid var(--uh)", animation: "tick-in 6s var(--ease) 2.0999999999999996s infinite both", color: "var(--st)" }}>
-                  <span className="m">4</span>
-                  TypeError: cents is undefined
-                </div>
-              </div>
-              <p className="ex-note">Clicks, keys and errors become numbered steps, or a Playwright test.</p>
-            </div>
-            <div className="ex-pane">
-              <div className="ui pad" style={{ minHeight: "240px" }}>
-                <div className="row" style={{ padding: "10px 0", borderTop: "1px solid var(--uh)", animation: "tick-in 6s var(--ease) 0s infinite both" }}>
-                  <i className="dot hd" />
-                  <span className="m" style={{ width: "72px" }}>Serious</span>
-                  Status pill text contrast is 3.1 to 1
-                </div>
-                <div className="row" style={{ padding: "10px 0", borderTop: "1px solid var(--uh)", animation: "tick-in 6s var(--ease) 0.8s infinite both" }}>
-                  <i className="dot hd" />
-                  <span className="m" style={{ width: "72px" }}>Moderate</span>
-                  New invoice button has no accessible name
-                </div>
-                <div className="row" style={{ padding: "10px 0", borderTop: "1px solid var(--uh)", animation: "tick-in 6s var(--ease) 1.6s infinite both" }}>
-                  <i className="dot " />
-                  <span className="m" style={{ width: "72px" }}>Minor</span>
-                  Table is missing a caption
-                </div>
-              </div>
-              <p className="ex-note">Runs axe-core in the page and lists problems by impact.</p>
-            </div>
-            <div className="ex-pane">
-              <div className="ui" style={{ position: "relative" }}>
-                <div className="mb-page" style={{ "--h": "240px", containerType: "inline-size" }}>
-                  {" "}
-                  <div className="mb-side">
-                    <b>Harbor</b>
-                    <span className="on">Invoices</span>
-                    <span>Shipments</span>
-                    <span>Carriers</span>
-                  </div>
-                  {" "}
-                  <div className="mb-main">
-                    <div className="mb-h">
-                      Invoices
-                      <span className="mb-new">New invoice</span>
-                    </div>
-                    {" "}
-                    <table className="mb-t">
-                      <tbody>
-                        <tr>
-                          <td>INV-20418</td>
-                          <td>Northwind Foods</td>
-                          <td>$12,840.00</td>
-                          <td>
-                            <span className="pill l">late</span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>INV-20431</td>
-                          <td>Calder Steel</td>
-                          <td>$6,420.50</td>
-                          <td>
-                            <span className="pill o">open</span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>INV-20437</td>
-                          <td>Ostrava Glass</td>
-                          <td>$3,189.00</td>
-                          <td>
-                            <span className="pill p">paid</span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>INV-20452</td>
-                          <td>Lindqvist Timber</td>
-                          <td>$9,774.25</td>
-                          <td>
-                            <span className="pill o">open</span>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  {" "}
-                </div>
-                <div style={{ position: "absolute", inset: "0", animation: "wipe 5s var(--ease) infinite" }}>
+          <Drawer id="browser-tool" label="Tool demo" from={721}>
+            <div className="ex-panes live">
+              <div className="ex-pane">
+                <div className="ui">
                   <div className="mb-page" style={{ "--h": "240px", containerType: "inline-size" }}>
                     {" "}
                     <div className="mb-side">
@@ -603,34 +380,260 @@ export function WhatYouCanDo() {
                       </table>
                     </div>
                     {" "}
-                    <div style={{ position: "absolute", inset: "0", background: "rgb(232 85 61 / 0.1)" }} />
+                    <div className="mb-outline" style={{ opacity: "1", left: "112px", top: "14px", width: "92px", height: "26px", animation: "outline-move 4.2s var(--ease) infinite" }} />
                   </div>
                 </div>
-                <i style={{ position: "absolute", top: "0", bottom: "0", width: "2px", background: "#e8553d", animation: "wipe-line 5s var(--ease) infinite" }} />
+                <p className="ex-note">Sends its selector, markup, source file and a crop to the agent.</p>
               </div>
-              <p className="ex-note">Pin a screenshot and drag a divider against the current page.</p>
-            </div>
-            <div className="ex-pane">
-              <div className="ui pad" style={{ minHeight: "240px", display: "flex", gap: "12px", alignItems: "end", justifyContent: "center" }}>
-                <div style={{ width: "210px", height: "150px", background: "#f6f7f9", borderRadius: "6px", padding: "6px", display: "grid", gap: "4px", alignContent: "start" }}>
-                  <i style={{ height: "10px", background: "#10233a", borderRadius: "2px", display: "block" }} />
-                  <i style={{ height: "6px", background: "#dfe4ea", display: "block" }} />
-                  <i style={{ height: "6px", background: "#dfe4ea", display: "block", width: "70%" }} />
+              <div className="ex-pane">
+                <div className="ui">
+                  <div className="mb-page" style={{ "--h": "240px", containerType: "inline-size" }}>
+                    {" "}
+                    <div className="mb-side">
+                      <b>Harbor</b>
+                      <span className="on">Invoices</span>
+                      <span>Shipments</span>
+                      <span>Carriers</span>
+                    </div>
+                    {" "}
+                    <div className="mb-main">
+                      <div className="mb-h">
+                        Invoices
+                        <span className="mb-new">New invoice</span>
+                      </div>
+                      {" "}
+                      <table className="mb-t">
+                        <tbody>
+                          <tr>
+                            <td>INV-20418</td>
+                            <td>Northwind Foods</td>
+                            <td>$12,840.00</td>
+                            <td>
+                              <span className="pill l">late</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>INV-20431</td>
+                            <td>Calder Steel</td>
+                            <td>$6,420.50</td>
+                            <td>
+                              <span className="pill o">open</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>INV-20437</td>
+                            <td>Ostrava Glass</td>
+                            <td>$3,189.00</td>
+                            <td>
+                              <span className="pill p">paid</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>INV-20452</td>
+                            <td>Lindqvist Timber</td>
+                            <td>$9,774.25</td>
+                            <td>
+                              <span className="pill o">open</span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    {" "}
+                    <svg style={{ position: "absolute", inset: "0", width: "100%", height: "100%" }} viewBox="0 0 500 240" preserveAspectRatio="none">
+                      <path d="M250 150C300 110 350 70 430 44" fill="none" stroke="#e8553d" strokeWidth="3" strokeDasharray="420" strokeDashoffset="420" style={{ animation: "draw 2.4s var(--ease) infinite alternate" }} />
+                      <rect x="340" y="20" width="130" height="40" rx="4" fill="none" stroke="#e8553d" strokeWidth="2" />
+                    </svg>
+                  </div>
                 </div>
-                <div style={{ width: "110px", height: "170px", background: "#f6f7f9", borderRadius: "6px", padding: "6px", display: "grid", gap: "4px", alignContent: "start" }}>
-                  <i style={{ height: "10px", background: "#10233a", borderRadius: "2px", display: "block" }} />
-                  <i style={{ height: "6px", background: "#dfe4ea", display: "block" }} />
-                  <i style={{ height: "6px", background: "#dfe4ea", display: "block", width: "70%" }} />
-                </div>
-                <div style={{ width: "64px", height: "130px", background: "#f6f7f9", borderRadius: "6px", padding: "6px", display: "grid", gap: "4px", alignContent: "start" }}>
-                  <i style={{ height: "10px", background: "#10233a", borderRadius: "2px", display: "block" }} />
-                  <i style={{ height: "6px", background: "#dfe4ea", display: "block" }} />
-                  <i style={{ height: "6px", background: "#dfe4ea", display: "block", width: "70%" }} />
-                </div>
+                <p className="ex-note">Arrows, boxes and labels, flattened into your message.</p>
               </div>
-              <p className="ex-note">Desktop, tablet and phone widths, or capture all three.</p>
+              <div className="ex-pane">
+                <div className="ui pad" style={{ minHeight: "240px", display: "grid", placeItems: "center", background: "#f6f7f9" }}>
+                  <span style={{ background: "#10233a", color: "#fff", borderRadius: "6px", padding: "6px 10px", animation: "pad 3.2s var(--ease) infinite", outline: "1px dashed #5ec48a", outlineOffset: "2px" }}>New invoice</span>
+                </div>
+                <p className="ex-note">Drag padding or edit text, then send the exact changes.</p>
+              </div>
+              <div className="ex-pane">
+                <div className="ui pad" style={{ minHeight: "240px" }}>
+                  <div className="row" style={{ padding: "7px 0", borderTop: "1px solid var(--uh)", animation: "tick-in 6s var(--ease) 0s infinite both" }}>
+                    <span className="m">1</span>
+                    Click New invoice
+                  </div>
+                  <div className="row" style={{ padding: "7px 0", borderTop: "1px solid var(--uh)", animation: "tick-in 6s var(--ease) 0.7s infinite both" }}>
+                    <span className="m">2</span>
+                    Type Calder Steel in Customer
+                  </div>
+                  <div className="row" style={{ padding: "7px 0", borderTop: "1px solid var(--uh)", animation: "tick-in 6s var(--ease) 1.4s infinite both" }}>
+                    <span className="m">3</span>
+                    Press Enter
+                  </div>
+                  <div className="row" style={{ padding: "7px 0", borderTop: "1px solid var(--uh)", animation: "tick-in 6s var(--ease) 2.0999999999999996s infinite both", color: "var(--st)" }}>
+                    <span className="m">4</span>
+                    TypeError: cents is undefined
+                  </div>
+                </div>
+                <p className="ex-note">Clicks, keys and errors become numbered steps, or a Playwright test.</p>
+              </div>
+              <div className="ex-pane">
+                <div className="ui pad" style={{ minHeight: "240px" }}>
+                  <div className="row" style={{ padding: "10px 0", borderTop: "1px solid var(--uh)", animation: "tick-in 6s var(--ease) 0s infinite both" }}>
+                    <i className="dot hd" />
+                    <span className="m" style={{ width: "72px" }}>Serious</span>
+                    Status pill text contrast is 3.1 to 1
+                  </div>
+                  <div className="row" style={{ padding: "10px 0", borderTop: "1px solid var(--uh)", animation: "tick-in 6s var(--ease) 0.8s infinite both" }}>
+                    <i className="dot hd" />
+                    <span className="m" style={{ width: "72px" }}>Moderate</span>
+                    New invoice button has no accessible name
+                  </div>
+                  <div className="row" style={{ padding: "10px 0", borderTop: "1px solid var(--uh)", animation: "tick-in 6s var(--ease) 1.6s infinite both" }}>
+                    <i className="dot " />
+                    <span className="m" style={{ width: "72px" }}>Minor</span>
+                    Table is missing a caption
+                  </div>
+                </div>
+                <p className="ex-note">Runs axe-core in the page and lists problems by impact.</p>
+              </div>
+              <div className="ex-pane">
+                <div className="ui" style={{ position: "relative" }}>
+                  <div className="mb-page" style={{ "--h": "240px", containerType: "inline-size" }}>
+                    {" "}
+                    <div className="mb-side">
+                      <b>Harbor</b>
+                      <span className="on">Invoices</span>
+                      <span>Shipments</span>
+                      <span>Carriers</span>
+                    </div>
+                    {" "}
+                    <div className="mb-main">
+                      <div className="mb-h">
+                        Invoices
+                        <span className="mb-new">New invoice</span>
+                      </div>
+                      {" "}
+                      <table className="mb-t">
+                        <tbody>
+                          <tr>
+                            <td>INV-20418</td>
+                            <td>Northwind Foods</td>
+                            <td>$12,840.00</td>
+                            <td>
+                              <span className="pill l">late</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>INV-20431</td>
+                            <td>Calder Steel</td>
+                            <td>$6,420.50</td>
+                            <td>
+                              <span className="pill o">open</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>INV-20437</td>
+                            <td>Ostrava Glass</td>
+                            <td>$3,189.00</td>
+                            <td>
+                              <span className="pill p">paid</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>INV-20452</td>
+                            <td>Lindqvist Timber</td>
+                            <td>$9,774.25</td>
+                            <td>
+                              <span className="pill o">open</span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    {" "}
+                  </div>
+                  <div style={{ position: "absolute", inset: "0", animation: "wipe 5s var(--ease) infinite" }}>
+                    <div className="mb-page" style={{ "--h": "240px", containerType: "inline-size" }}>
+                      {" "}
+                      <div className="mb-side">
+                        <b>Harbor</b>
+                        <span className="on">Invoices</span>
+                        <span>Shipments</span>
+                        <span>Carriers</span>
+                      </div>
+                      {" "}
+                      <div className="mb-main">
+                        <div className="mb-h">
+                          Invoices
+                          <span className="mb-new">New invoice</span>
+                        </div>
+                        {" "}
+                        <table className="mb-t">
+                          <tbody>
+                            <tr>
+                              <td>INV-20418</td>
+                              <td>Northwind Foods</td>
+                              <td>$12,840.00</td>
+                              <td>
+                                <span className="pill l">late</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>INV-20431</td>
+                              <td>Calder Steel</td>
+                              <td>$6,420.50</td>
+                              <td>
+                                <span className="pill o">open</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>INV-20437</td>
+                              <td>Ostrava Glass</td>
+                              <td>$3,189.00</td>
+                              <td>
+                                <span className="pill p">paid</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>INV-20452</td>
+                              <td>Lindqvist Timber</td>
+                              <td>$9,774.25</td>
+                              <td>
+                                <span className="pill o">open</span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      {" "}
+                      <div style={{ position: "absolute", inset: "0", background: "rgb(232 85 61 / 0.1)" }} />
+                    </div>
+                  </div>
+                  <i style={{ position: "absolute", top: "0", bottom: "0", width: "2px", background: "#e8553d", animation: "wipe-line 5s var(--ease) infinite" }} />
+                </div>
+                <p className="ex-note">Pin a screenshot and drag a divider against the current page.</p>
+              </div>
+              <div className="ex-pane">
+                <div className="ui pad" style={{ minHeight: "240px", display: "flex", gap: "12px", alignItems: "end", justifyContent: "center" }}>
+                  <div style={{ width: "210px", height: "150px", background: "#f6f7f9", borderRadius: "6px", padding: "6px", display: "grid", gap: "4px", alignContent: "start" }}>
+                    <i style={{ height: "10px", background: "#10233a", borderRadius: "2px", display: "block" }} />
+                    <i style={{ height: "6px", background: "#dfe4ea", display: "block" }} />
+                    <i style={{ height: "6px", background: "#dfe4ea", display: "block", width: "70%" }} />
+                  </div>
+                  <div style={{ width: "110px", height: "170px", background: "#f6f7f9", borderRadius: "6px", padding: "6px", display: "grid", gap: "4px", alignContent: "start" }}>
+                    <i style={{ height: "10px", background: "#10233a", borderRadius: "2px", display: "block" }} />
+                    <i style={{ height: "6px", background: "#dfe4ea", display: "block" }} />
+                    <i style={{ height: "6px", background: "#dfe4ea", display: "block", width: "70%" }} />
+                  </div>
+                  <div style={{ width: "64px", height: "130px", background: "#f6f7f9", borderRadius: "6px", padding: "6px", display: "grid", gap: "4px", alignContent: "start" }}>
+                    <i style={{ height: "10px", background: "#10233a", borderRadius: "2px", display: "block" }} />
+                    <i style={{ height: "6px", background: "#dfe4ea", display: "block" }} />
+                    <i style={{ height: "6px", background: "#dfe4ea", display: "block", width: "70%" }} />
+                  </div>
+                </div>
+                <p className="ex-note">Desktop, tablet and phone widths, or capture all three.</p>
+              </div>
             </div>
-          </div>
+          </Drawer>
           {" "}
         </div>
       </div>

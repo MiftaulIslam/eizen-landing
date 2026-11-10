@@ -1,1 +1,195 @@
-/* drawer: bottom sheets on small screens (components/ui/Drawer.tsx). Mobile first. */
+/* Drawer: bottom sheets on small screens (components/ui/Drawer.tsx, lib/effects/drawer.ts).
+   Mobile first: the base rules are the phone sheet. At and above a drawer's `from` width
+   (.dw-721, .dw-861, .dw-1081) and without scripts, every wrapper becomes display: contents and
+   the content sits in the layout exactly as it would without the drawer. The sheet copies the
+   phone menu in nav.css: same curve, rounded top, handle, dimmed page, content arriving in order. */
+
+.dw { --sheet: cubic-bezier(0.32, 0.72, 0, 1); --dw-ease: cubic-bezier(0.2, 0.7, 0.2, 1); display: contents; }
+
+/* The button that opens it. Uses restyle it (see the FAQ below). */
+.dw-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid var(--hair);
+  border-radius: 10px;
+  font: 500 15px/1.2 var(--sans);
+  color: var(--fg);
+  transition: background-color 160ms var(--ease), border-color 160ms var(--ease);
+}
+.dw-trigger:active { background: rgb(238 240 245 / 0.06); }
+
+/* The layer is a manual popover, so it sits in the top layer above the header. These reset the
+   browser's popover box; it is only displayed while the sheet is open or closing. */
+.dw-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  overflow: hidden;
+  display: none;
+}
+.dw.shown > .dw-layer { display: block; }
+html.dw-locked, html.dw-locked body { overflow: hidden; }
+
+.dw-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgb(5 6 10 / 0.62);
+  opacity: 0;
+  transition: opacity 320ms var(--ease);
+}
+.dw.open .dw-scrim { opacity: calc(1 - var(--dw-drag, 0)); transition-duration: 360ms; }
+
+.dw.shown .dw-panel {
+  --fg: #eef0f5;
+  --fg2: #c5cad6;
+  --fg3: #99a0b2;
+  --hair: rgb(238 240 245 / 0.14);
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  max-width: 640px;
+  max-height: calc(100dvh - 56px);
+  margin-inline: auto;
+  background: var(--n1);
+  color: var(--fg);
+  border-top: 1px solid var(--hair);
+  border-radius: 20px 20px 0 0;
+  outline: none;
+  translate: 0 100%;
+  transition: translate 420ms var(--sheet);
+}
+.dw.open .dw-panel { translate: 0 0; transition-duration: 520ms; }
+.dw-layer.dragging .dw-panel, .dw-layer.dragging .dw-scrim { transition: none; }
+@media (width >= 641px) {
+  .dw.shown .dw-panel { border: 1px solid var(--hair); border-bottom: 0; }
+}
+
+/* Handle, title and close button. The whole head is the drag area. */
+.dw-head {
+  flex: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px 12px;
+  padding: 10px 10px 6px var(--gutter);
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
+}
+.dw-layer.dragging .dw-head { cursor: grabbing; }
+.dw-grip { grid-column: 1 / -1; justify-self: center; width: 40px; height: 4px; margin-bottom: 4px; border-radius: 4px; background: var(--hair); }
+.dw-title { min-width: 0; font: 400 22px/1.2 var(--serif); letter-spacing: -0.01em; color: var(--fg); text-wrap: balance; }
+.dw-close { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 10px; color: var(--fg2); cursor: pointer; transition: background-color 160ms var(--ease), color 160ms var(--ease); }
+.dw-close svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; }
+.dw-close:active { background: rgb(238 240 245 / 0.08); color: var(--fg); }
+@media (hover: hover) {
+  .dw-close:hover { background: rgb(238 240 245 / 0.08); color: var(--fg); }
+}
+
+.dw-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 6px var(--gutter) calc(20px + env(safe-area-inset-bottom));
+}
+
+/* Content arrives just after the sheet, in order where items carry --i. */
+.dw.open .dw-body > * { animation: dw-in 460ms var(--dw-ease) 120ms both; }
+@keyframes dw-in { from { opacity: 0; translate: 0 8px; } }
+
+/* ---- Inline: at and above `from`, and always without scripts ---- */
+html:not(.js) .dw > .dw-trigger,
+html:not(.js) .dw > .dw-layer > .dw-scrim,
+html:not(.js) .dw > .dw-layer > .dw-panel > .dw-head { display: none; }
+html:not(.js) .dw > .dw-layer,
+html:not(.js) .dw > .dw-layer > .dw-panel,
+html:not(.js) .dw > .dw-layer > .dw-panel > .dw-body { display: contents; }
+
+@media (width >= 721px) {
+  .dw-721 > .dw-trigger, .dw-721 > .dw-layer > .dw-scrim, .dw-721 > .dw-layer > .dw-panel > .dw-head { display: none; }
+  .dw-721 > .dw-layer, .dw-721.shown > .dw-layer, .dw-721 > .dw-layer > .dw-panel, .dw-721 > .dw-layer > .dw-panel > .dw-body { display: contents; }
+}
+@media (width >= 861px) {
+  .dw-861 > .dw-trigger, .dw-861 > .dw-layer > .dw-scrim, .dw-861 > .dw-layer > .dw-panel > .dw-head { display: none; }
+  .dw-861 > .dw-layer, .dw-861.shown > .dw-layer, .dw-861 > .dw-layer > .dw-panel, .dw-861 > .dw-layer > .dw-panel > .dw-body { display: contents; }
+}
+@media (width >= 1081px) {
+  .dw-1081 > .dw-trigger, .dw-1081 > .dw-layer > .dw-scrim, .dw-1081 > .dw-layer > .dw-panel > .dw-head { display: none; }
+  .dw-1081 > .dw-layer, .dw-1081.shown > .dw-layer, .dw-1081 > .dw-layer > .dw-panel, .dw-1081 > .dw-layer > .dw-panel > .dw-body { display: contents; }
+}
+
+/* ---- FAQ thread (components/ui/Faq.tsx): on phones the questions open from a bar above the
+   thread instead of scrolling sideways in a strip. ---- */
+.fq .dw-trigger {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  min-height: 52px;
+  padding: 12px 16px;
+  border: 0;
+  border-bottom: 1px solid var(--uh);
+  border-radius: 0;
+  background: rgb(0 0 0 / 0.16);
+  color: var(--ut);
+  font: 400 15px/1.3 var(--sans);
+  text-align: left;
+}
+.fq .dw-trigger:active { background: rgb(0 0 0 / 0.26); }
+.fq-dw-ic { flex: none; width: 16px; height: 16px; fill: none; stroke: var(--ut2); stroke-width: 1.5; stroke-linecap: round; }
+.fq-dw-l { flex: 1; min-width: 0; }
+.fq-dw-n { font: 400 12px/1.4 var(--mono); color: var(--ut3); }
+.fq-dw-ch { flex: none; width: 10px; height: 6px; fill: none; stroke: var(--ut2); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+.fq .dw.shown .dw-panel { --fg: var(--ut); --fg2: var(--ut2); --fg3: var(--ut3); --hair: var(--uh); background: var(--ui); }
+.fq .dw.shown .dw-body { padding-inline: 10px; }
+.fq .dw.shown .dw-title { padding-left: 2px; }
+.fq .dw.shown .fq-side { padding: 0; background: none; border: 0; }
+.fq .dw.shown .fq-top { display: none; }
+.fq .dw.shown .fq-list { display: grid; gap: 2px; padding: 0; overflow: visible; scroll-snap-type: none; }
+.fq .dw.shown .fq-tab { width: 100%; min-height: 48px; padding: 12px 12px; border: 0; font-size: 15.5px; scroll-snap-align: none; }
+.fq .dw.shown .fq-tq { display: block; overflow: visible; -webkit-line-clamp: unset; }
+.fq .dw.open .dw-body > .fq-side { animation: none; }
+.fq .dw.open .fq-tab { animation: dw-in 460ms var(--dw-ease) both; animation-delay: calc(120ms + var(--i, 0) * 28ms); }
+@media (width >= 861px) {
+  .fq .dw > .dw-trigger { display: none; }
+}
+
+/* ---- Browser tools (app/browser/sections.tsx): on phones each tool opens its demo in a sheet ---- */
+.explore .ex-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; }
+.explore .ex-row::after { content: ""; flex: none; width: 7px; height: 7px; margin-right: 6px; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor; rotate: 45deg; opacity: 0.55; }
+html:not(.js) .explore .ex-row::after { content: none; }
+.explore .dw.shown .ex-panes { position: relative; top: 0; display: grid; grid-template-columns: minmax(0, 1fr); min-height: 0; margin: 0; }
+.explore .dw.shown .ex-pane { position: relative; inset: auto; grid-area: 1 / 1; min-width: 0; }
+@media (width >= 721px) {
+  .explore .ex-row { display: block; min-height: auto; }
+  .explore .ex-row::after { content: none; }
+}
+
+/* ---- Tour hotspots (app/product/sections.tsx): a tap opens the tip in a sheet, so the hover
+   tip stays out of the way on touch screens. ---- */
+.dw-tip { font-size: 16px; line-height: 1.55; color: var(--fg2); }
+.dw-tip b { display: none; }
+@media (hover: none) {
+  .spots .spot:not(:focus-visible) .tip { opacity: 0; visibility: hidden; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dw.shown .dw-panel, .dw.open .dw-panel, .dw-scrim, .dw.open .dw-scrim { transition: none; }
+  .dw.open .dw-body > *, .fq .dw.open .fq-tab { animation: none; }
+}

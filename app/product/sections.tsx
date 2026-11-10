@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Arrow } from "@/components/parts/Arrow";
+import { Drawer } from "@/components/ui/Drawer";
 
 export function Hero() {
   return (
@@ -9,55 +10,59 @@ export function Hero() {
         <div className="copy stack rise" style={{ "--s": "20px" }}>
           <p className="kick">Tour</p>
           <h1 className="d1">Threads, diffs, terminals and a browser in one window</h1>
-          <p className="lead">Move over the dots to see what each part of the window does.</p>
+          <p className="lead">Each part of the window, and what it is for.</p>
         </div>
         {" "}
         <div style={{ marginTop: "clamp(40px,5vw,64px)" }}>
           <div className="spots win rise">
             <img src="/assets/screens/thread.webp" srcSet="/assets/screens/thread-m.webp 1100w, /assets/screens/thread.webp 2200w" sizes="(max-width: 1080px) calc(100vw - 40px), min(1410px, 100vw)" alt="An Eizen window with a thread open" width="2200" height="1375" fetchPriority="high" />
-            <button type="button" className="spot edge-l" style={{ left: "9%", top: "19%" }} aria-label="Threads with lamps">
+            <button type="button" className="spot edge-l" data-drawer-open="tour-tip" data-drawer-when="touch" data-drawer-title="" style={{ left: "9%", top: "19%" }} aria-label="Threads with lamps">
               <i />
-              <span className="tip">
+              <span className="tip" data-drawer-content="">
                 <b>Threads with lamps</b>
                 Blue is working, amber is waiting for you, green has finished.
               </span>
             </button>
-            <button type="button" className="spot edge-l" style={{ left: "28%", top: "7%" }} aria-label="Breadcrumb menus">
+            <button type="button" className="spot edge-l" data-drawer-open="tour-tip" data-drawer-when="touch" data-drawer-title="" style={{ left: "28%", top: "7%" }} aria-label="Breadcrumb menus">
               <i />
-              <span className="tip">
+              <span className="tip" data-drawer-content="">
                 <b>Breadcrumb menus</b>
                 Click the computer, project or thread to jump to another one or act on it.
               </span>
             </button>
-            <button type="button" className="spot " style={{ left: "78%", top: "7%" }} aria-label="Git, in the header">
+            <button type="button" className="spot " data-drawer-open="tour-tip" data-drawer-when="touch" data-drawer-title="" style={{ left: "78%", top: "7%" }} aria-label="Git, in the header">
               <i />
-              <span className="tip">
+              <span className="tip" data-drawer-content="">
                 <b>Git, in the header</b>
                 Branch, commit, and the state of GitHub Actions.
               </span>
             </button>
-            <button type="button" className="spot edge-r" style={{ left: "93%", top: "7%" }} aria-label="Panels">
+            <button type="button" className="spot edge-r" data-drawer-open="tour-tip" data-drawer-when="touch" data-drawer-title="" style={{ left: "93%", top: "7%" }} aria-label="Panels">
               <i />
-              <span className="tip">
+              <span className="tip" data-drawer-content="">
                 <b>Panels</b>
                 Diff, tasks, browser, terminal and editor each open beside the thread.
               </span>
             </button>
-            <button type="button" className="spot up edge-l" style={{ left: "38%", top: "94%" }} aria-label="The composer">
+            <button type="button" className="spot up edge-l" data-drawer-open="tour-tip" data-drawer-when="touch" data-drawer-title="" style={{ left: "38%", top: "94%" }} aria-label="The composer">
               <i />
-              <span className="tip">
+              <span className="tip" data-drawer-content="">
                 <b>The composer</b>
                 Account, model, effort and permission mode, always in sight.
               </span>
             </button>
-            <button type="button" className="spot edge-r" style={{ left: "91%", top: "2%" }} aria-label="Account meters">
+            <button type="button" className="spot edge-r" data-drawer-open="tour-tip" data-drawer-when="touch" data-drawer-title="" style={{ left: "91%", top: "2%" }} aria-label="Account meters">
               <i />
-              <span className="tip">
+              <span className="tip" data-drawer-content="">
                 <b>Account meters</b>
                 How much of each usage window every account has left.
               </span>
             </button>
           </div>
+          {/* On touch screens a tap on a dot opens its tip here instead of the hover tip. */}
+          <Drawer id="tour-tip" label="Part of the window">
+            <p className="dw-tip" data-drawer-slot="" />
+          </Drawer>
           <div className="spot-list">
             <ul className="ticks">
               <li>
