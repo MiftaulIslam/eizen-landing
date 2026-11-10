@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { UPDATED } from "@/lib/site";
 import { Mark } from "@/components/parts/Mark";
 

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { Faq, type FaqItem } from "@/components/ui/Faq";
 import { Arrow } from "@/components/parts/Arrow";
 import { Collide } from "@/components/parts/Collide";

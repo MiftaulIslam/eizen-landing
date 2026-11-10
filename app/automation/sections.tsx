@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { Arrow } from "@/components/parts/Arrow";
 import { FlowLine } from "@/components/parts/FlowLine";
 import { NightDial } from "@/components/parts/NightDial";

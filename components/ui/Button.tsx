@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import type { ReactNode } from "react";
 
 // The site's buttons. The classes are the ones site.css already styles: "btn fill" is the light

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { Faq, type FaqItem } from "@/components/ui/Faq";
 import { FeatureScenes } from "@/components/ui/FeatureScenes";
 import { ServiceIcon } from "@/components/ui/ServiceIcon";
