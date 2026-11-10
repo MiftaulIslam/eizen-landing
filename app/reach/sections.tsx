@@ -8,6 +8,7 @@ export function Hero() {
     <section className="full">
       {" "}
       <video className="bg" data-auto="" muted loop playsInline preload="none" poster="/assets/video/moon-pass.webp" aria-label="Time-lapse of the moon crossing the sky beside the SOAR telescope dome">
+        <source src="/assets/video/moon-pass-m.mp4" type="video/mp4" media="(max-width: 800px)" />
         <source src="/assets/video/moon-pass.mp4" type="video/mp4" />
       </video>
       {" "}

@@ -8,6 +8,7 @@ export function Hero() {
     <section className="full">
       {" "}
       <video className="bg" data-auto="" muted loop playsInline preload="none" poster="/assets/video/red-lamp.webp" aria-label="Time-lapse of a small observatory lit by red lamps under a moving sky">
+        <source src="/assets/video/red-lamp-m.mp4" type="video/mp4" media="(max-width: 800px)" />
         <source src="/assets/video/red-lamp.mp4" type="video/mp4" />
       </video>
       {" "}

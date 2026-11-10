@@ -17,6 +17,7 @@ export function Hero() {
       <div className="sky">
         {" "}
         <video data-auto="" muted loop playsInline preload="none" poster="/assets/video/sky-turns.webp" aria-label="Time-lapse of stars circling the sky above an observatory dome">
+          <source src="/assets/video/sky-turns-m.mp4" type="video/mp4" media="(max-width: 800px)" />
           <source src="/assets/video/sky-turns.mp4" type="video/mp4" />
         </video>
         {" "}
@@ -827,6 +828,7 @@ export function NightShift() {
     <section className="full">
       {" "}
       <video className="bg" data-auto="" muted loop playsInline preload="none" poster="/assets/video/red-lamp.webp" aria-label="Time-lapse of a small observatory lit by red lamps while stars move overhead">
+        <source src="/assets/video/red-lamp-m.mp4" type="video/mp4" media="(max-width: 800px)" />
         <source src="/assets/video/red-lamp.mp4" type="video/mp4" />
       </video>
       {" "}
