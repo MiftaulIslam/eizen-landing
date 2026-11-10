@@ -1,8 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  cacheComponents: true,
-  partialPrefetching: true,
   // The site used to be plain HTML files. Old links and indexed URLs move permanently to the new routes.
   async redirects() {
     return [

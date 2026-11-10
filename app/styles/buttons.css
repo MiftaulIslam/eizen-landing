@@ -1,0 +1,176 @@
+/* Buttons and arrow links.
+   A button fills with liquid from the point where the pointer came in and drains toward the point
+   where it left. lib/effects/buttons.ts writes that point to --bx/--by (percent of the button), the
+   drop's size to --bs, and holds .is-wet from entry until the drain ends. Without the script the
+   fill starts from the middle. Keyboard focus fills from the left edge. */
+
+.btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  overflow: clip;
+  -webkit-tap-highlight-color: transparent;
+  --blob: var(--lamp);
+  --blob-ink: #fff;
+  transition:
+    background-color 160ms var(--ease),
+    border-color 160ms var(--ease),
+    color 120ms linear,
+    transform 140ms var(--ease);
+}
+/* The label Button renders around its children. */
+.btn-t { display: inline-flex; align-items: center; gap: inherit; }
+
+/* The liquid: an uneven drop sized to just cover the button from the entry point. It grows and
+   turns a little as it spreads, which keeps the edge moving like a liquid front. */
+.btn::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: var(--bx, 50%);
+  top: var(--by, 50%);
+  width: var(--bs, calc(250% + 120px));
+  aspect-ratio: 1;
+  border-radius: 43% 57% 52% 48% / 55% 46% 54% 45%;
+  background: var(--blob);
+  transform: translate(-50%, -50%) rotate(-60deg) scale(0);
+  transition: transform 480ms cubic-bezier(0.5, 0, 0.3, 1);
+  pointer-events: none;
+}
+
+.btn:focus-visible::before { transform: translate(-50%, -50%) rotate(0deg) scale(1); transition: transform 560ms cubic-bezier(0.3, 0.6, 0.2, 1); }
+@media (hover: hover) {
+  .btn:hover::before { transform: translate(-50%, -50%) rotate(0deg) scale(1); transition: transform 560ms cubic-bezier(0.3, 0.6, 0.2, 1); }
+  .btn.line:hover { border-color: var(--fg); }
+}
+.btn.line:focus-visible { border-color: var(--fg); }
+
+/* The fill replaces site.css's hover background, so the resting colour stays under it and touch
+   screens keep no hover state after a tap. */
+.btn.fill:hover { background: #eef0f5; }
+.paper .btn.fill:hover, .btn.fill.dark:hover { background: #14161c; }
+@media (hover: none) {
+  .btn.line:hover { border-color: var(--hair); }
+}
+
+.btn:active { transform: scale(0.97); }
+
+/* Light button: lamp red, then white text. Its dark label reads on the lamp too, so the label
+   stays dark while the liquid spreads, turns white once it covers, and turns dark at once on leave.
+   html .btn.btn outranks site.css's ".paper .btn.fill" colour. */
+.btn.fill { --blob: var(--lamp); --blob-ink: #fff; }
+html .btn.btn:focus-visible { color: var(--blob-ink); transition: color 140ms linear 220ms; }
+@media (hover: hover) {
+  html .btn.btn:hover { color: var(--blob-ink); transition: color 140ms linear 220ms, background-color 160ms var(--ease), border-color 160ms var(--ease), transform 140ms var(--ease); }
+}
+
+/* Dark button (any fill inside .paper, or "dark" anywhere) fills light; the outline fills with the
+   text colour of its section. No one label colour reads on both halves, so while the button is wet
+   the label is white in difference mode: it inverts exactly where the liquid has reached. */
+.btn.fill.dark { background: #14161c; color: #f8f5ee; box-shadow: none; }
+.paper .btn.fill, .btn.fill.dark { --blob: #eef0f5; --blob-ink: #14161c; }
+.btn.line { --blob: var(--fg); --blob-ink: var(--bg); }
+:is(.paper .btn.fill, .btn.fill.dark, .btn.line):is(.is-wet, :focus-visible) .btn-t { color: #fff; mix-blend-mode: difference; }
+@media (hover: hover) {
+  :is(.paper .btn.fill, .btn.fill.dark, .btn.line):hover .btn-t { color: #fff; mix-blend-mode: difference; }
+}
+/* The outline on paper is transparent, which leaves the blend nothing to invert. While wet it takes
+   the paper colour it already sits on, at once, so nothing visibly changes. */
+html .paper .btn.line.btn:is(.is-wet, :focus-visible, :hover) {
+  background-color: var(--bg);
+  transition: border-color 160ms var(--ease), color 120ms linear, transform 140ms var(--ease);
+}
+
+/* A hairline ring so the light fill still reads as a button on paper. */
+.paper .btn.fill::after, .btn.fill.dark::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgb(20 22 28 / 0.28);
+  opacity: 0;
+  transition: opacity 200ms var(--ease);
+  pointer-events: none;
+}
+.paper .btn.fill:focus-visible::after, .btn.fill.dark:focus-visible::after { opacity: 1; }
+@media (hover: hover) {
+  .paper .btn.fill:hover::after, .btn.fill.dark:hover::after { opacity: 1; }
+}
+
+/* Reduced motion: no drop, no press; the fill and the label colour simply change. */
+@media (prefers-reduced-motion: reduce) {
+  .btn::before {
+    inset: 0;
+    width: auto;
+    aspect-ratio: auto;
+    border-radius: 0;
+    transform: none;
+    opacity: 0;
+    transition: opacity 120ms linear;
+  }
+  .btn:focus-visible::before { transform: none; opacity: 1; transition: opacity 120ms linear; }
+  .btn, html .btn.btn:focus-visible { transition: background-color 120ms linear, border-color 120ms linear, color 120ms linear; }
+  .btn:active { transform: none; }
+  html .btn.btn .btn-t { color: inherit !important; mix-blend-mode: normal !important; }
+}
+@media (prefers-reduced-motion: reduce) and (hover: hover) {
+  .btn:hover::before { transform: none; opacity: 1; transition: opacity 120ms linear; }
+  html .btn.btn:hover { transition: color 120ms linear; }
+}
+
+/* Arrow links. On hover the underline draws in from the left in the accent, the arrow leaves
+   along the logo's slope and a second one slides up behind it. At rest it is the site.css link. */
+.lnk { position: relative; }
+.lnk::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  pointer-events: none;
+}
+a.lnk:hover { border-color: var(--hair); }
+
+.arw {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  width: 12px;
+  height: 14px;
+  padding: 2px;
+  margin: -2px;
+  box-sizing: content-box;
+  overflow: hidden;
+}
+/* 18px up and 18 * 0.325 across: the slope of the arrow itself. */
+.arw .ar { transition: transform 300ms cubic-bezier(0.2, 0.7, 0.2, 1); }
+.arw .ar + .ar { position: absolute; left: 2px; top: 2px; transform: translate(-5.85px, 18px); }
+
+.lnk:focus-visible::after { transform: scaleX(1); transform-origin: left center; }
+.lnk:focus-visible .arw .ar:first-child { transform: translate(5.85px, -18px); }
+.lnk:focus-visible .arw .ar + .ar { transform: none; transition-delay: 70ms; }
+
+@media (hover: hover) {
+  .lnk:hover::after { transform: scaleX(1); transform-origin: left center; }
+  .lnk:hover .arw .ar:first-child { transform: translate(5.85px, -18px); }
+  .lnk:hover .arw .ar + .ar { transform: none; transition-delay: 70ms; }
+}
+@media (hover: none) {
+  .lnk:hover .arw .ar:first-child { transform: none; }
+  .lnk:hover .arw .ar + .ar { transform: translate(-5.85px, 18px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lnk::after { transform: none; opacity: 0; transition: opacity 120ms linear; }
+  .lnk:focus-visible::after { transform: none; opacity: 1; }
+  .arw .ar, .arw .ar:first-child { transform: none !important; transition: none; }
+  .arw .ar + .ar { display: none; }
+}
+@media (prefers-reduced-motion: reduce) and (hover: hover) {
+  .lnk:hover::after { transform: none; opacity: 1; }
+}

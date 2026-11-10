@@ -1,54 +1,74 @@
 import { Mark } from "@/components/parts/Mark";
+import { ServiceIcon, type ServiceName } from "@/components/ui/ServiceIcon";
+
+// What each service gives the agent, shortened from the table on /connections.
+const OUTER: Array<[ServiceName, string]> = [
+  ["GitHub", "Issues, pull requests"],
+  ["Linear", "Issues and projects"],
+  ["Jira", "Jira issues"],
+  ["Notion", "Pages and databases"],
+  ["Gmail", "Read, search, draft"],
+  ["Figma", "Frames, styles, variables"],
+  ["AWS", "API calls and docs"],
+  ["Vercel", "Deployments, build logs"],
+];
+
+const INNER: Array<[ServiceName, string]> = [
+  ["Neon", "Branches, queries"],
+  ["Supabase", "Tables, queries, logs"],
+  ["Cloudflare", "Workers, DNS, R2"],
+  ["Context7", "Current library docs"],
+  ["Apify", "Scrapers and Actors"],
+];
+
+type RingProps = { items: Array<[ServiceName, string]>; inset: string; duration: string; reverse?: boolean };
+
+// The spokes turn in a ring of their own under the mark, in step with the services above it,
+// so a pulse can start behind the mark while the service names stay on top.
+function Spokes({ items, inset, duration, reverse }: RingProps) {
+  return (
+    <div className="ring spokes" style={{ "--in": inset, "--d": duration, "--dir": reverse ? "reverse" : "normal" }}>
+      {items.map(([name], i) => (
+        <div className="sat" key={name} style={{ "--a": `${(360 / items.length) * i}deg` }}>
+          <i className="spoke" />
+          <i className="pulse" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function Ring({ items, inset, duration, reverse }: RingProps) {
+  return (
+    <div className="ring" style={{ "--in": inset, "--d": duration, "--dir": reverse ? "reverse" : "normal" }}>
+      {items.map(([name, gets], i) => {
+        const a = `${(360 / items.length) * i}deg`;
+        return (
+          <div className="sat" key={name} style={{ "--a": a }}>
+            <span className="tag" style={{ "--a": a, "--d": duration, "--rev": reverse ? "normal" : "reverse" }}>
+              <ServiceIcon name={name} />
+              <span className="nm">{name}</span>
+              <span className="got">{gets}</span>
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
 export function Orbit() {
+  const outer = { items: OUTER, inset: "2%", duration: "96s" };
+  const inner = { items: INNER, inset: "22%", duration: "72s", reverse: true };
   return (
-    <div className="orbit live" aria-hidden="true">
-      <div className="ring" style={{ "--in": "2%", "--d": "96s", "--dir": "normal" }}>
-        <div className="sat" style={{ "--a": "0deg" }}>
-          <span className="tag" style={{ "--a": "0deg", "--d": "96s", "--rev": "reverse" }}>GitHub</span>
-        </div>
-        <div className="sat" style={{ "--a": "45deg" }}>
-          <span className="tag" style={{ "--a": "45deg", "--d": "96s", "--rev": "reverse" }}>Linear</span>
-        </div>
-        <div className="sat" style={{ "--a": "90deg" }}>
-          <span className="tag" style={{ "--a": "90deg", "--d": "96s", "--rev": "reverse" }}>Jira</span>
-        </div>
-        <div className="sat" style={{ "--a": "135deg" }}>
-          <span className="tag" style={{ "--a": "135deg", "--d": "96s", "--rev": "reverse" }}>Notion</span>
-        </div>
-        <div className="sat" style={{ "--a": "180deg" }}>
-          <span className="tag" style={{ "--a": "180deg", "--d": "96s", "--rev": "reverse" }}>Gmail</span>
-        </div>
-        <div className="sat" style={{ "--a": "225deg" }}>
-          <span className="tag" style={{ "--a": "225deg", "--d": "96s", "--rev": "reverse" }}>Figma</span>
-        </div>
-        <div className="sat" style={{ "--a": "270deg" }}>
-          <span className="tag" style={{ "--a": "270deg", "--d": "96s", "--rev": "reverse" }}>AWS</span>
-        </div>
-        <div className="sat" style={{ "--a": "315deg" }}>
-          <span className="tag" style={{ "--a": "315deg", "--d": "96s", "--rev": "reverse" }}>Vercel</span>
-        </div>
-      </div>
-      <div className="ring" style={{ "--in": "22%", "--d": "72s", "--dir": "reverse" }}>
-        <div className="sat" style={{ "--a": "0deg" }}>
-          <span className="tag" style={{ "--a": "0deg", "--d": "72s", "--rev": "normal" }}>Neon</span>
-        </div>
-        <div className="sat" style={{ "--a": "72deg" }}>
-          <span className="tag" style={{ "--a": "72deg", "--d": "72s", "--rev": "normal" }}>Supabase</span>
-        </div>
-        <div className="sat" style={{ "--a": "144deg" }}>
-          <span className="tag" style={{ "--a": "144deg", "--d": "72s", "--rev": "normal" }}>Cloudflare</span>
-        </div>
-        <div className="sat" style={{ "--a": "216deg" }}>
-          <span className="tag" style={{ "--a": "216deg", "--d": "72s", "--rev": "normal" }}>Context7</span>
-        </div>
-        <div className="sat" style={{ "--a": "288deg" }}>
-          <span className="tag" style={{ "--a": "288deg", "--d": "72s", "--rev": "normal" }}>Apify</span>
-        </div>
-      </div>
+    <div className="orbit live" aria-hidden="true" data-orbit>
+      <Spokes {...outer} />
+      <Spokes {...inner} />
       <div className="core">
         <Mark />
       </div>
+      <Ring {...outer} />
+      <Ring {...inner} />
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Mark } from "@/components/parts/Mark";
+import { Button } from "@/components/ui/Button";
+import { NavItem, NavMenu, NavTrigger } from "@/components/ui/NavMenu";
 
 // The Product panel only opens above 1080 px. Below that its pictures resolve to this blank instead of downloading.
 const BLANK = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
@@ -16,60 +18,60 @@ export function Header({ solid = false, current }: { solid?: boolean; current?: 
           <span>Eizen</span>
         </Link>
         {" "}
-        <nav className="nav" aria-label="Main">
+        <NavMenu label="Main" className="nav">
           {" "}
-          <button type="button" data-mega="" aria-expanded="false" aria-haspopup="true">Product</button>
+          <NavTrigger controls="product-panel" data-mega="">Product</NavTrigger>
           {" "}
-          <Link href="/lanes" aria-current={current === "/lanes" ? "page" : undefined}>Lanes</Link>
-          <Link href="/teams" aria-current={current === "/teams" ? "page" : undefined}>For teams</Link>
-          <Link href="/compare" aria-current={current === "/compare" ? "page" : undefined}>Compare</Link>
-          <Link href="/security" aria-current={current === "/security" ? "page" : undefined}>Security</Link>
+          <NavItem href="/lanes" current={current}>Lanes</NavItem>
+          <NavItem href="/teams" current={current}>For teams</NavItem>
+          <NavItem href="/compare" current={current}>Compare</NavItem>
+          <NavItem href="/security" current={current}>Security</NavItem>
           {" "}
-        </nav>
+        </NavMenu>
         {" "}
         <div className="top-cta">
-          <Link className="btn fill sm" href="/download">Download</Link>
+          <Button href="/download" variant="light" size="sm">Download</Button>
         </div>
         {" "}
-        <button type="button" className="menu-btn" aria-expanded="false">Menu</button>
+        <button type="button" className="menu-btn" aria-expanded="false" aria-controls="site-drawer">Menu</button>
         {" "}
       </div>
       {" "}
-      <div className="mega night">
+      <div className="mega night" id="product-panel">
         {" "}
         <div className="wrap">
           {" "}
           <div className="mega-list">
             {" "}
-            <Link href="/product" prefetch={false}>
+            <Link href="/product" prefetch={false} style={{ "--i": 0 }}>
               <b>Tour</b>
               <span>The whole window, part by part</span>
             </Link>
-            <Link href="/lanes" prefetch={false}>
+            <Link href="/lanes" prefetch={false} style={{ "--i": 1 }}>
               <b>Lanes</b>
               <span>A worktree for every thread</span>
             </Link>
-            <Link href="/browser" prefetch={false}>
+            <Link href="/browser" prefetch={false} style={{ "--i": 2 }}>
               <b>Browser</b>
               <span>The agent can see the page</span>
             </Link>
-            <Link href="/memory" prefetch={false}>
+            <Link href="/memory" prefetch={false} style={{ "--i": 3 }}>
               <b>Memory</b>
               <span>Why every line is there</span>
             </Link>
-            <Link href="/automation" prefetch={false}>
+            <Link href="/automation" prefetch={false} style={{ "--i": 4 }}>
               <b>Automation</b>
               <span>Schedules, triggers, Night shift</span>
             </Link>
-            <Link href="/meetings" prefetch={false}>
+            <Link href="/meetings" prefetch={false} style={{ "--i": 5 }}>
               <b>Meetings</b>
               <span>Recordings into threads</span>
             </Link>
-            <Link href="/reach" prefetch={false}>
+            <Link href="/reach" prefetch={false} style={{ "--i": 6 }}>
               <b>Reach</b>
               <span>Phone, laptop, review links</span>
             </Link>
-            <Link href="/connections" prefetch={false}>
+            <Link href="/connections" prefetch={false} style={{ "--i": 7 }}>
               <b>Connections</b>
               <span>GitHub, Linear, Neon and twelve more</span>
             </Link>
@@ -91,23 +93,23 @@ export function Header({ solid = false, current }: { solid?: boolean; current?: 
         {" "}
       </div>
       {" "}
-      <div className="drawer">
+      <div className="drawer" id="site-drawer">
         {" "}
-        <Link href="/product" prefetch={false}>Tour</Link>
-        <Link href="/lanes" prefetch={false}>Lanes</Link>
-        <Link href="/browser" prefetch={false}>Browser</Link>
-        <Link href="/memory" prefetch={false}>Memory</Link>
-        <Link href="/automation" prefetch={false}>Automation</Link>
-        <Link href="/meetings" prefetch={false}>Meetings</Link>
-        <Link href="/reach" prefetch={false}>Reach</Link>
-        <Link href="/connections" prefetch={false}>Connections</Link>
+        <Link href="/product" prefetch={false} style={{ "--i": 0 }}>Tour</Link>
+        <Link href="/lanes" prefetch={false} style={{ "--i": 1 }}>Lanes</Link>
+        <Link href="/browser" prefetch={false} style={{ "--i": 2 }}>Browser</Link>
+        <Link href="/memory" prefetch={false} style={{ "--i": 3 }}>Memory</Link>
+        <Link href="/automation" prefetch={false} style={{ "--i": 4 }}>Automation</Link>
+        <Link href="/meetings" prefetch={false} style={{ "--i": 5 }}>Meetings</Link>
+        <Link href="/reach" prefetch={false} style={{ "--i": 6 }}>Reach</Link>
+        <Link href="/connections" prefetch={false} style={{ "--i": 7 }}>Connections</Link>
         {" "}
-        <Link href="/lanes" prefetch={false}>Lanes</Link>
-        <Link href="/teams" prefetch={false}>For teams</Link>
-        <Link href="/compare" prefetch={false}>Compare</Link>
-        <Link href="/security" prefetch={false}>Security</Link>
+        <Link href="/lanes" prefetch={false} style={{ "--i": 8 }}>Lanes</Link>
+        <Link href="/teams" prefetch={false} style={{ "--i": 9 }}>For teams</Link>
+        <Link href="/compare" prefetch={false} style={{ "--i": 10 }}>Compare</Link>
+        <Link href="/security" prefetch={false} style={{ "--i": 11 }}>Security</Link>
         {" "}
-        <Link className="btn fill" href="/download" prefetch={false}>Download for Windows</Link>
+        <Button href="/download" variant="light" prefetch={false} className="drawer-cta">Download for Windows</Button>
         {" "}
       </div>
       {" "}

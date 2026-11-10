@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Arrow } from "@/components/parts/Arrow";
+import { Button } from "@/components/ui/Button";
 
 export function Hero() {
   return (
@@ -19,7 +20,7 @@ export function Hero() {
           <p className="lead">Drop in a recording of any length. Eizen transcribes it on your computer, works out who said what and opens a thread where Claude summarises it and you can ask questions.</p>
           {" "}
           <div className="btns" style={{ marginTop: "32px" }}>
-            <Link className="btn fill" href="/download">Download for Windows</Link>
+            <Button href="/download">Download for Windows</Button>
           </div>
           {" "}
         </div>

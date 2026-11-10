@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Arrow } from "@/components/parts/Arrow";
 import { Pointer } from "@/components/parts/Pointer";
+import { Button } from "@/components/ui/Button";
 
 export function Hero() {
   return (
@@ -20,7 +21,7 @@ export function Hero() {
           <p className="lead">An agent that can only read code has to guess whether the page looks right. In Eizen it opens the page and checks.</p>
           {" "}
           <div className="btns" style={{ marginTop: "32px" }}>
-            <Link className="btn fill" href="/download">Download for Windows</Link>
+            <Button href="/download">Download for Windows</Button>
           </div>
           {" "}
         </div>

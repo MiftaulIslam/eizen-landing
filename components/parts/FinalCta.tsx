@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Button } from "@/components/ui/Button";
 
 export function FinalCta() {
   return (
@@ -13,8 +13,8 @@ export function FinalCta() {
           <p className="lead">The setup checklist handles Claude Code, sign-in and Git, so you won't need a terminal.</p>
           {" "}
           <div className="btns" style={{ marginTop: "16px" }}>
-            <Link className="btn fill" href="/download">Download for Windows</Link>
-            <Link className="btn line" href="/teams">Plan a team rollout</Link>
+            <Button href="/download">Download for Windows</Button>
+            <Button href="/teams" variant="outline">Plan a team rollout</Button>
           </div>
           {" "}
         </div>

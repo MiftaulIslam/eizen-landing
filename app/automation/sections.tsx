@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Arrow } from "@/components/parts/Arrow";
 import { FlowLine } from "@/components/parts/FlowLine";
 import { NightDial } from "@/components/parts/NightDial";
+import { Button } from "@/components/ui/Button";
 
 export function Hero() {
   return (
@@ -26,7 +27,7 @@ export function Hero() {
           <p className="lead">Observatories light their walkways red so nobody loses their night vision, and the instruments keep working until morning. Night shift is the same arrangement for your Claude accounts.</p>
           {" "}
           <div className="btns" style={{ marginTop: "32px" }}>
-            <Link className="btn fill" href="/download">Download for Windows</Link>
+            <Button href="/download">Download for Windows</Button>
           </div>
           {" "}
         </div>

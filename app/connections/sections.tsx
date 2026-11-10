@@ -1,4 +1,5 @@
 import { Orbit } from "@/components/parts/Orbit";
+import { ServiceIcon } from "@/components/ui/ServiceIcon";
 
 export function Hero() {
   return (
@@ -51,77 +52,152 @@ export function OneClick() {
             </thead>
             <tbody>
               <tr>
-                <th scope="row">GitHub</th>
+                <th scope="row">
+                  <span className="svc-name">
+                    <ServiceIcon name="GitHub" />
+                    GitHub
+                  </span>
+                </th>
                 <td data-l="What the agent gets">Repositories, issues, pull requests, Actions</td>
                 <td data-l="How you connect">Paste a token</td>
               </tr>
               <tr>
-                <th scope="row">Linear</th>
+                <th scope="row">
+                  <span className="svc-name">
+                    <ServiceIcon name="Linear" />
+                    Linear
+                  </span>
+                </th>
                 <td data-l="What the agent gets">Issues and projects</td>
                 <td data-l="How you connect">Sign in</td>
               </tr>
               <tr>
-                <th scope="row">Atlassian</th>
+                <th scope="row">
+                  <span className="svc-name">
+                    <ServiceIcon name="Atlassian" />
+                    Atlassian
+                  </span>
+                </th>
                 <td data-l="What the agent gets">Jira issues and Confluence pages</td>
                 <td data-l="How you connect">Sign in</td>
               </tr>
               <tr>
-                <th scope="row">Notion</th>
+                <th scope="row">
+                  <span className="svc-name">
+                    <ServiceIcon name="Notion" />
+                    Notion
+                  </span>
+                </th>
                 <td data-l="What the agent gets">Pages and databases</td>
                 <td data-l="How you connect">Sign in</td>
               </tr>
               <tr>
-                <th scope="row">Gmail</th>
+                <th scope="row">
+                  <span className="svc-name">
+                    <ServiceIcon name="Gmail" />
+                    Gmail
+                  </span>
+                </th>
                 <td data-l="What the agent gets">Read, search, label and draft email</td>
                 <td data-l="How you connect">Your own Google client</td>
               </tr>
               <tr>
-                <th scope="row">Neon</th>
+                <th scope="row">
+                  <span className="svc-name">
+                    <ServiceIcon name="Neon" />
+                    Neon
+                  </span>
+                </th>
                 <td data-l="What the agent gets">Postgres projects, branches, queries</td>
                 <td data-l="How you connect">Sign in</td>
               </tr>
               <tr>
-                <th scope="row">Supabase</th>
+                <th scope="row">
+                  <span className="svc-name">
+                    <ServiceIcon name="Supabase" />
+                    Supabase
+                  </span>
+                </th>
                 <td data-l="What the agent gets">Projects, tables, queries, logs</td>
                 <td data-l="How you connect">Sign in</td>
               </tr>
               <tr>
-                <th scope="row">Vercel</th>
+                <th scope="row">
+                  <span className="svc-name">
+                    <ServiceIcon name="Vercel" />
+                    Vercel
+                  </span>
+                </th>
                 <td data-l="What the agent gets">Projects, deployments, build logs</td>
                 <td data-l="How you connect">Sign in</td>
               </tr>
               <tr>
-                <th scope="row">Cloudflare</th>
+                <th scope="row">
+                  <span className="svc-name">
+                    <ServiceIcon name="Cloudflare" />
+                    Cloudflare
+                  </span>
+                </th>
                 <td data-l="What the agent gets">Workers, DNS, R2, D1 and the rest of its API</td>
                 <td data-l="How you connect">Sign in</td>
               </tr>
               <tr>
-                <th scope="row">AWS</th>
+                <th scope="row">
+                  <span className="svc-name">
+                    <ServiceIcon name="AWS" />
+                    AWS
+                  </span>
+                </th>
                 <td data-l="What the agent gets">API calls and documentation</td>
                 <td data-l="How you connect">Sign in</td>
               </tr>
               <tr>
-                <th scope="row">Apify</th>
+                <th scope="row">
+                  <span className="svc-name">
+                    <ServiceIcon name="Apify" />
+                    Apify
+                  </span>
+                </th>
                 <td data-l="What the agent gets">Scrapers and automation Actors</td>
                 <td data-l="How you connect">Sign in</td>
               </tr>
               <tr>
-                <th scope="row">Figma</th>
+                <th scope="row">
+                  <span className="svc-name">
+                    <ServiceIcon name="Figma" />
+                    Figma
+                  </span>
+                </th>
                 <td data-l="What the agent gets">Frames, styles, variables from the desktop app</td>
                 <td data-l="How you connect">Local</td>
               </tr>
               <tr>
-                <th scope="row">Context7</th>
+                <th scope="row">
+                  <span className="svc-name">
+                    <ServiceIcon name="Context7" />
+                    Context7
+                  </span>
+                </th>
                 <td data-l="What the agent gets">Current docs for the libraries you use</td>
                 <td data-l="How you connect">No account</td>
               </tr>
               <tr>
-                <th scope="row">DeepWiki</th>
+                <th scope="row">
+                  <span className="svc-name">
+                    <ServiceIcon name="DeepWiki" />
+                    DeepWiki
+                  </span>
+                </th>
                 <td data-l="What the agent gets">Answers about public GitHub repositories</td>
                 <td data-l="How you connect">No account</td>
               </tr>
               <tr>
-                <th scope="row">Microsoft Learn</th>
+                <th scope="row">
+                  <span className="svc-name">
+                    <ServiceIcon name="Microsoft Learn" />
+                    Microsoft Learn
+                  </span>
+                </th>
                 <td data-l="What the agent gets">Official Microsoft and Azure docs</td>
                 <td data-l="How you connect">No account</td>
               </tr>

@@ -1,4 +1,9 @@
 import Link from "next/link";
+import { Faq, type FaqItem } from "@/components/ui/Faq";
+import { FeatureScenes } from "@/components/ui/FeatureScenes";
+import { ServiceIcon } from "@/components/ui/ServiceIcon";
+import { ApprovalScene, ChecksScene, ProtectedFilesScene, SafetyNetScene } from "@/components/scenes/security";
+import { IconApproval, IconChecks, IconLock, IconSafetyNet } from "@/components/scenes/icons";
 import { Approval } from "@/components/parts/Approval";
 import { Arrow } from "@/components/parts/Arrow";
 import { AskLine } from "@/components/parts/AskLine";
@@ -9,6 +14,8 @@ import { Orbit } from "@/components/parts/Orbit";
 import { Pointer } from "@/components/parts/Pointer";
 import { Tunnel } from "@/components/parts/Tunnel";
 import { VectorField } from "@/components/parts/VectorField";
+import { Button } from "@/components/ui/Button";
+import { ArrowLink } from "@/components/ui/ArrowLink";
 
 export function Hero() {
   return (
@@ -34,67 +41,99 @@ export function Hero() {
           <p className="lead">Eizen is a desktop app for Claude Code, Codex and OpenCode. Each thread gets its own git worktree, dev server port and browser, so several can work on one repo at once and you merge the ones that worked.</p>
           {" "}
           <div className="btns" style={{ marginTop: "32px" }}>
-            <Link className="btn fill" href="/download">Download for Windows</Link>
-            <Link className="btn line" href="/teams">How a team rolls it out</Link>
+            <Button href="/download">Download for Windows</Button>
+            <Button href="/teams" variant="outline">How a team rolls it out</Button>
           </div>
           {" "}
           <p className="note kick">Windows 10 and 11. Uses the accounts you already have.</p>
           {" "}
         </div>
         {" "}
-        <div className="hero-cards live" aria-hidden="true" data-seq="900,1500,1500,1700,1500,1700,1200" data-hold="2600">
+        <div className="hero-cards live" aria-hidden="true" data-seq="1400,1500,1500,1700,1500,1700,1400" data-hold="3200">
           {" "}
-          <div className="ui hc hc1">
-            <div className="row">
-              <i className="dot" />
+          {/* data-stages: the step each stage starts at. data-states: what the lamp shows during it. */}
+          <div className="ui hc" style={{ "--n": 0 }} data-stages="0,1,3,4,6" data-states="work,work,wait,work,done">
+            <div className="hc-top">
+              <i className="lamp" />
               <b className="trunc">Days overdue column</b>
+              <span className="hc-file">
+                <span className="sw">
+                  <span className="o3">app.js</span>
+                  <span className="a3 o4">Allow Bash?</span>
+                  <span className="a4">npm test</span>
+                </span>
+              </span>
             </div>
             <div className="m">eizen/lane-5c1a87 on port 4100</div>
             <div className="st">
               <span className="sw">
-                <span className="o3">Editing app.js</span>
+                <span className="o1">Reading app.js</span>
+                <span className="a1 o3">Editing app.js</span>
                 <span className="a3 o4">Waiting for approval</span>
                 <span className="a4 o6">Running the checks</span>
                 <span className="a6">Checks passed</span>
               </span>
             </div>
-            <div className="bar">
+            <div className="hc-track">
+              <i />
+              <i />
+              <i />
+              <i />
               <i />
             </div>
           </div>
           {" "}
-          <div className="ui hc hc2">
-            <div className="row">
-              <i className="dot" />
+          <div className="ui hc" style={{ "--n": 1 }} data-stages="0,2,5" data-states="work,work,done">
+            <div className="hc-top">
+              <i className="lamp" />
               <b className="trunc">Status pills</b>
+              <span className="hc-file">
+                <span className="sw">
+                  <span className="o2">app.js</span>
+                  <span className="a2">localhost:4101</span>
+                </span>
+              </span>
             </div>
             <div className="m">eizen/lane-a48476 on port 4101</div>
             <div className="st">
               <span className="sw">
-                <span className="o5">Checking the page in its browser</span>
+                <span className="o2">Editing app.js</span>
+                <span className="a2 o5">Checking the page in its browser</span>
                 <span className="a5">Ready to merge</span>
               </span>
             </div>
-            <div className="bar">
+            <div className="hc-track">
+              <i />
+              <i />
               <i />
             </div>
           </div>
           {" "}
-          <div className="ui hc hc3">
-            <div className="row">
-              <i className="dot" />
+          <div className="ui hc" style={{ "--n": 2 }} data-stages="0,2,3,7" data-states="work,wait,work,done">
+            <div className="hc-top">
+              <i className="lamp" />
               <b className="trunc">Pre-ship review</b>
+              <span className="hc-file">
+                <span className="sw">
+                  <span className="o2">app.js</span>
+                  <span className="a2 o3">Allow Bash?</span>
+                  <span className="a3">app.js</span>
+                </span>
+              </span>
             </div>
             <div className="m">eizen/lane-9bb061 on port 4102</div>
             <div className="st">
               <span className="sw">
                 <span className="o2">Reading app.js</span>
-                <span className="a2 o4">Waiting for approval</span>
-                <span className="a4 o7">Two sub agents working</span>
+                <span className="a2 o3">Waiting for approval</span>
+                <span className="a3 o7">Two sub agents working</span>
                 <span className="a7">Checks passed</span>
               </span>
             </div>
-            <div className="bar">
+            <div className="hc-track">
+              <i />
+              <i />
+              <i />
               <i />
             </div>
           </div>
@@ -185,35 +224,47 @@ export function OneRepository() {
   );
 }
 
+// Heading words as spans, so they can rise in one after another. The text stays in the HTML.
+function Words({ text }: { text: string }) {
+  return text.split(" ").map((word, i) => (
+    <span key={i}>
+      {i > 0 && " "}
+      <span className="wd" style={{ "--i": i }}>{word}</span>
+    </span>
+  ));
+}
+
 export function Lanes() {
   return (
     <section className="sec night ">
       <div className="wrap">
         <div className="split">
           {" "}
-          <div className="txt stack rise" style={{ "--s": "20px" }}>
+          {/* data-sync: the beats light up in turn with the recording beside them (lib/effects/home.ts). */}
+          <div className="txt stack rise lanes-txt" style={{ "--s": "20px" }} data-sync="0,10.5,17.5">
             {" "}
             <p className="kick">Lanes</p>
             {" "}
-            <h2 className="d2">One worktree, one port and one browser per thread</h2>
+            <h2 className="d2 words">
+              <Words text="One worktree, one port and one browser per thread" />
+            </h2>
             {" "}
-            <p className="body">Press Lane before you send. The thread starts in its own git worktree on its own branch, with your .env files copied in and node_modules shared with the main checkout. It gets a dev server port from 4100 up, and the agent is told to use it.</p>
+            <p className="body beat">Press Lane before you send. The thread starts in its own git worktree on its own branch, with your .env files copied in and node_modules shared with the main checkout. It gets a dev server port from 4100 up, and the agent is told to use it.</p>
             {" "}
             <ul className="ticks">
-              <li>
+              <li className="beat">
                 <b>Merge from the breadcrumb.</b>
                 {" "}If it would conflict, nothing changes and Eizen names the files.
               </li>
-              <li>
+              <li className="beat">
                 <b>Try 3 ways.</b>
                 {" "}One message goes to three lanes, and you keep whichever works best when you use it.
               </li>
             </ul>
-            <p style={{ marginTop: "24px" }}>
-              <Link className="lnk" href="/lanes">
+            <p className="lanes-more" style={{ marginTop: "24px" }}>
+              <ArrowLink href="/lanes">
                 How lanes work
-                <Arrow />
-              </Link>
+              </ArrowLink>
             </p>
             {" "}
           </div>
@@ -589,10 +640,9 @@ export function TheIdeaBehindIt() {
           <p className="lead">Leave a camera open under a clear sky and each star sweeps an arc around the same spot. Agents rewrite your files all day, and we wanted the branch and the reason for each change to stay put in the same way.</p>
           {" "}
           <div className="btns" style={{ marginTop: "32px" }}>
-            <Link className="lnk" href="/about">
+            <ArrowLink href="/about">
               More on the idea
-              <Arrow />
-            </Link>
+            </ArrowLink>
           </div>
           {" "}
         </div>
@@ -642,10 +692,9 @@ export function Browser() {
             <p className="body">Claude opens your dev server in the thread's own browser, clicks through it, reads the console and takes screenshots, even when that thread is off screen. Websites open in a real WebView2 view, so OAuth and logins behave the way they do in Edge.</p>
             {" "}
             <p style={{ marginTop: "24px" }}>
-              <Link className="lnk" href="/browser">
+              <ArrowLink href="/browser">
                 See the browser tools
-                <Arrow />
-              </Link>
+              </ArrowLink>
             </p>
             {" "}
           </div>
@@ -752,10 +801,9 @@ export function Memory() {
             <p className="body">Git blame can tell you Claude changed something three weeks ago. Eizen records which turn wrote each line, so Alt+L shows the thread, what you asked for and what the agent said about it. Before the agent edits that line again, it gets the same note.</p>
             {" "}
             <p style={{ marginTop: "24px" }}>
-              <Link className="lnk" href="/memory">
+              <ArrowLink href="/memory">
                 How Eizen remembers
-                <Arrow />
-              </Link>
+              </ArrowLink>
             </p>
             {" "}
           </div>
@@ -785,43 +833,49 @@ export function ANormalDay() {
           {" "}
         </div>
         {" "}
-        <div className="bars rise" data-bars="" aria-hidden="true">
-          <div className="bar">
-            <img src="/assets/screens/strip-history.webp" alt="" loading="lazy" />
-            <img src="/assets/screens/strip-diff.webp" alt="" loading="lazy" />
-          </div>
-          <div className="bar">
-            <img src="/assets/screens/strip-browser.webp" alt="" loading="lazy" />
-            <img src="/assets/screens/strip-editor.webp" alt="" loading="lazy" />
-          </div>
-          <div className="bar">
-            <img src="/assets/screens/strip-thread.webp" alt="" loading="lazy" />
-            <img src="/assets/screens/strip-history.webp" alt="" loading="lazy" />
-          </div>
-        </div>
-        {" "}
-        <div className="grid" style={{ "--n": "3", marginTop: "clamp(40px,5vw,72px)" }}>
-          {" "}
-          <div className="cell rise">
-            <h3>Morning</h3>
-            <p>Read what ran overnight. Start three lanes on the billing repo, one for each ticket that came out of yesterday's review.</p>
+        {/* One picture per moment, seen through the three bars of the mark. Hovering or focusing a
+            column shows its picture; otherwise they take turns (lib/effects/home.ts). */}
+        <div className="day" data-day="">
+          <div className="bars day-bars rise" aria-hidden="true">
+            {[0, 1, 2].map((bar) => (
+              <div className="bar" key={bar}>
+                {DAY_PICS.map((pic, i) => (
+                  <img key={pic.src} className={i === 0 ? "on" : undefined} src={`/assets/screens/${pic.src}-m.webp`} srcSet={`/assets/screens/${pic.src}-m.webp 1100w, /assets/screens/${pic.src}.webp 2200w`} sizes="(max-width: 1080px) calc(100vw - 40px), min(1410px, 92vw)" style={{ "--pos": pic.pos }} alt="" loading="lazy" />
+                ))}
+              </div>
+            ))}
           </div>
           {" "}
-          <div className="cell rise" style={{ "--d": "60ms" }}>
-            <h3>Afternoon</h3>
-            <p>Approve the odd command from your phone. Pick an element in the browser and tell the agent what is wrong with it.</p>
+          <div className="grid day-cols" style={{ "--n": "3", marginTop: "clamp(40px,5vw,72px)" }}>
+            {" "}
+            <div className="cell rise on" tabIndex={0}>
+              <h3>Morning</h3>
+              <p>Read what ran overnight. Start three lanes on the billing repo, one for each ticket that came out of yesterday's review.</p>
+            </div>
+            {" "}
+            <div className="cell rise" style={{ "--d": "60ms" }} tabIndex={0}>
+              <h3>Afternoon</h3>
+              <p>Approve the odd command from your phone. Pick an element in the browser and tell the agent what is wrong with it.</p>
+            </div>
+            {" "}
+            <div className="cell rise" style={{ "--d": "120ms" }} tabIndex={0}>
+              <h3>End of day</h3>
+              <p>Merge the lanes that passed the project checks and queue the slow jobs for tonight.</p>
+            </div>
+            {" "}
           </div>
-          {" "}
-          <div className="cell rise" style={{ "--d": "120ms" }}>
-            <h3>End of day</h3>
-            <p>Merge the lanes that passed the project checks and queue the slow jobs for tonight.</p>
-          </div>
-          {" "}
         </div>
       </div>
     </section>
   );
 }
+
+// Morning: the branch history of what ran. Afternoon: the thread's browser. End of day: the lane menu with Merge.
+const DAY_PICS = [
+  { src: "history", pos: "60% 0%" },
+  { src: "browser", pos: "100% 0%" },
+  { src: "lane-menu", pos: "30% 0%" },
+];
 
 export function NightShift() {
   return (
@@ -846,10 +900,9 @@ export function NightShift() {
           <p className="lead">Add tasks before you leave. Between 23:00 and 07:00 Eizen starts them one at a time per project, only while the account you chose has headroom. A task that stops for an approval is parked and reported, and the summary is there in the morning.</p>
           {" "}
           <div className="btns" style={{ marginTop: "32px" }}>
-            <Link className="lnk" href="/automation">
+            <ArrowLink href="/automation">
               How Night shift works
-              <Arrow />
-            </Link>
+            </ArrowLink>
           </div>
           {" "}
         </div>
@@ -894,10 +947,9 @@ export function ForTeams() {
             <p className="body">Eizen has no admin console. A lead sets it up once on one machine and exports the settings, and everyone else imports that file. Tokens stay on each person's computer.</p>
             {" "}
             <p style={{ marginTop: "24px" }}>
-              <Link className="lnk" href="/teams">
+              <ArrowLink href="/teams">
                 Read the full rollout
-                <Arrow />
-              </Link>
+              </ArrowLink>
             </p>
             {" "}
           </div>
@@ -1010,10 +1062,9 @@ export function ComparedWith() {
         {" "}
         <p className="tbl-note small">
           Descriptions of other tools cover the usual setup and may change.{" "}
-          <Link className="lnk" href="/compare">
+          <ArrowLink href="/compare">
             Full comparison
-            <Arrow />
-          </Link>
+          </ArrowLink>
         </p>
       </div>
     </section>
@@ -1035,10 +1086,9 @@ export function Reach() {
             <p className="body">Pair a phone with a QR code and keep driving threads running on your PC. Install Eizen on a laptop and your PC's dev ports appear at the same localhost addresses there, so sign-in redirects finish normally.</p>
             {" "}
             <p style={{ marginTop: "24px" }}>
-              <Link className="lnk" href="/reach">
+              <ArrowLink href="/reach">
                 Phone, laptop and review links
-                <Arrow />
-              </Link>
+              </ArrowLink>
             </p>
             {" "}
           </div>
@@ -1062,41 +1112,26 @@ export function Security() {
   return (
     <section className="sec paper ">
       <div className="wrap">
-        <div className="split" style={{ marginBottom: "clamp(40px,5vw,72px)" }}>
-          <div className="txt stack rise" style={{ "--s": "16px" }}>
-            <p className="kick">Security</p>
-            <h2 className="d2">Your threads and tokens stay on your computer</h2>
-            <p className="body">Eizen has no server of its own. Prompts and the code an agent reads go to the model provider you chose, as they do with the CLI. Connection secrets are encrypted for your Windows user.</p>
-          </div>
-          <div className="med rise">
-            <Approval />
-          </div>
-        </div>
-        {" "}
-        <div className="grid" style={{ "--n": "4" }}>
-          <div className="cell rise">
-            <h3>Approvals with reasons</h3>
-            <p>A prompt shows the exact command and, when it is risky, why.</p>
-          </div>
-          <div className="cell rise">
-            <h3>A safety net you can turn on</h3>
-            <p>With it on, force pushes and recursive deletes still stop and ask, even in Bypass permissions.</p>
-          </div>
-          <div className="cell rise">
-            <h3>Protected files</h3>
-            <p>List the paths agents may read and never edit.</p>
-          </div>
-          <div className="cell rise">
-            <h3>Project checks</h3>
-            <p>A failing test run goes back to the agent before the turn can finish.</p>
-          </div>
-        </div>
+        <FeatureScenes
+          lead={
+            <div className="txt stack rise" style={{ "--s": "16px" }}>
+              <p className="kick">Security</p>
+              <h2 className="d2">Your threads and tokens stay on your computer</h2>
+              <p className="body">Eizen has no server of its own. Prompts and the code an agent reads go to the model provider you chose, as they do with the CLI. Connection secrets are encrypted for your Windows user.</p>
+            </div>
+          }
+          items={[
+            { title: "Approvals with reasons", text: "A prompt shows the exact command and, when it is risky, why.", icon: <IconApproval />, scene: <ApprovalScene /> },
+            { title: "A safety net you can turn on", text: "With it on, force pushes and recursive deletes still stop and ask, even in Bypass permissions.", icon: <IconSafetyNet />, scene: <SafetyNetScene /> },
+            { title: "Protected files", text: "List the paths agents may read and never edit.", icon: <IconLock />, scene: <ProtectedFilesScene /> },
+            { title: "Project checks", text: "A failing test run goes back to the agent before the turn can finish.", icon: <IconChecks />, scene: <ChecksScene /> },
+          ]}
+        />
         {" "}
         <p style={{ marginTop: "32px" }}>
-          <Link className="lnk" href="/security">
+          <ArrowLink href="/security">
             What stays and what leaves
-            <Arrow />
-          </Link>
+          </ArrowLink>
         </p>
       </div>
     </section>
@@ -1117,98 +1152,168 @@ export function Connections() {
       {" "}
       <div className="ticker" aria-hidden="true">
         <div>
-          <span>GitHub</span>
-          <span>Linear</span>
-          <span>Jira</span>
-          <span>Confluence</span>
-          <span>Notion</span>
-          <span>Gmail</span>
-          <span>Neon</span>
-          <span>Supabase</span>
-          <span>Vercel</span>
-          <span>Cloudflare</span>
-          <span>AWS</span>
-          <span>Apify</span>
-          <span>Figma</span>
-          <span>Context7</span>
-          <span>DeepWiki</span>
-          <span>Microsoft Learn</span>
-          <span>GitHub</span>
-          <span>Linear</span>
-          <span>Jira</span>
-          <span>Confluence</span>
-          <span>Notion</span>
-          <span>Gmail</span>
-          <span>Neon</span>
-          <span>Supabase</span>
-          <span>Vercel</span>
-          <span>Cloudflare</span>
-          <span>AWS</span>
-          <span>Apify</span>
-          <span>Figma</span>
-          <span>Context7</span>
-          <span>DeepWiki</span>
-          <span>Microsoft Learn</span>
+          <span>
+            <ServiceIcon name="GitHub" />
+            GitHub
+          </span>
+          <span>
+            <ServiceIcon name="Linear" />
+            Linear
+          </span>
+          <span>
+            <ServiceIcon name="Jira" />
+            Jira
+          </span>
+          <span>
+            <ServiceIcon name="Confluence" />
+            Confluence
+          </span>
+          <span>
+            <ServiceIcon name="Notion" />
+            Notion
+          </span>
+          <span>
+            <ServiceIcon name="Gmail" />
+            Gmail
+          </span>
+          <span>
+            <ServiceIcon name="Neon" />
+            Neon
+          </span>
+          <span>
+            <ServiceIcon name="Supabase" />
+            Supabase
+          </span>
+          <span>
+            <ServiceIcon name="Vercel" />
+            Vercel
+          </span>
+          <span>
+            <ServiceIcon name="Cloudflare" />
+            Cloudflare
+          </span>
+          <span>
+            <ServiceIcon name="AWS" />
+            AWS
+          </span>
+          <span>
+            <ServiceIcon name="Apify" />
+            Apify
+          </span>
+          <span>
+            <ServiceIcon name="Figma" />
+            Figma
+          </span>
+          <span>
+            <ServiceIcon name="Context7" />
+            Context7
+          </span>
+          <span>
+            <ServiceIcon name="DeepWiki" />
+            DeepWiki
+          </span>
+          <span>
+            <ServiceIcon name="Microsoft Learn" />
+            Microsoft Learn
+          </span>
+          <span>
+            <ServiceIcon name="GitHub" />
+            GitHub
+          </span>
+          <span>
+            <ServiceIcon name="Linear" />
+            Linear
+          </span>
+          <span>
+            <ServiceIcon name="Jira" />
+            Jira
+          </span>
+          <span>
+            <ServiceIcon name="Confluence" />
+            Confluence
+          </span>
+          <span>
+            <ServiceIcon name="Notion" />
+            Notion
+          </span>
+          <span>
+            <ServiceIcon name="Gmail" />
+            Gmail
+          </span>
+          <span>
+            <ServiceIcon name="Neon" />
+            Neon
+          </span>
+          <span>
+            <ServiceIcon name="Supabase" />
+            Supabase
+          </span>
+          <span>
+            <ServiceIcon name="Vercel" />
+            Vercel
+          </span>
+          <span>
+            <ServiceIcon name="Cloudflare" />
+            Cloudflare
+          </span>
+          <span>
+            <ServiceIcon name="AWS" />
+            AWS
+          </span>
+          <span>
+            <ServiceIcon name="Apify" />
+            Apify
+          </span>
+          <span>
+            <ServiceIcon name="Figma" />
+            Figma
+          </span>
+          <span>
+            <ServiceIcon name="Context7" />
+            Context7
+          </span>
+          <span>
+            <ServiceIcon name="DeepWiki" />
+            DeepWiki
+          </span>
+          <span>
+            <ServiceIcon name="Microsoft Learn" />
+            Microsoft Learn
+          </span>
         </div>
       </div>
       {" "}
       <div className="wrap" style={{ marginTop: "32px" }}>
-        <Link className="lnk" href="/connections">
+        <ArrowLink href="/connections">
           All connections
-          <Arrow />
-        </Link>
+        </ArrowLink>
       </div>
     </section>
   );
 }
 
+const QUESTIONS: FaqItem[] = [
+  { q: "What is Eizen?", a: "Eizen is a Windows desktop app for running Claude Code, Codex and OpenCode. Each thread gets its own git worktree, dev server port and browser, so several agents can work on one repository without overwriting each other. It also records which turn wrote each line, runs queued tasks overnight and lets you approve the next step from your phone." },
+  { q: "Where does my code go?", a: "Prompts and the code an agent reads go to the model provider you chose, as they do with the CLI. Eizen has no server of its own and sends no analytics. Tool calls go to the services you connected, and their tokens stay in an encrypted file for your Windows user." },
+  { q: "Does it replace Claude Code?", a: "No. Eizen runs Claude Code through its SDK and uses the same sessions. Keep your terminal if you like it." },
+  { q: "Does a lane copy the whole repository?", a: "Git worktrees share one object store, so a lane costs about the size of your checked-out files. node_modules is linked to the main checkout." },
+  { q: "What happens when my PC is off?", a: "Nothing runs. Your phone and laptop talk to the PC, and Night shift needs it awake." },
+  { q: "What happens at a usage limit?", a: "The thread stops and says so. Pick another account and send again, and queued messages move with it. Relay can do that for you if you turn it on, but check your plan's terms first." },
+  { q: "Which systems does it run on?", a: "Windows 10 and 11 are what we build and test." },
+  { q: "Can two people work in one thread?", a: "No. Threads belong to one computer. Review links let people outside the team comment on a running page." },
+];
+
 export function Questions() {
   return (
-    <section className="sec night ">
+    <section className="sec night">
       <div className="wrap">
-        <div className="split start even">
-          {" "}
-          <div className="stack rise">
+        <div className="sec-head solo rise">
+          <div className="stack" style={{ "--s": "16px" }}>
             <p className="kick">Questions</p>
             <h2 className="d2">Before you install</h2>
           </div>
-          {" "}
-          <div className="faq">
-            <details>
-              <summary>What is Eizen?</summary>
-              <div className="a">Eizen is a Windows desktop app for running Claude Code, Codex and OpenCode. Each thread gets its own git worktree, dev server port and browser, so several agents can work on one repository without overwriting each other. It also records which turn wrote each line, runs queued tasks overnight and lets you approve the next step from your phone.</div>
-            </details>
-            <details>
-              <summary>Where does my code go?</summary>
-              <div className="a">Prompts and the code an agent reads go to the model provider you chose, as they do with the CLI. Eizen has no server of its own and sends no analytics. Tool calls go to the services you connected, and their tokens stay in an encrypted file for your Windows user.</div>
-            </details>
-            <details>
-              <summary>Does it replace Claude Code?</summary>
-              <div className="a">No. Eizen runs Claude Code through its SDK and uses the same sessions. Keep your terminal if you like it.</div>
-            </details>
-            <details>
-              <summary>Does a lane copy the whole repository?</summary>
-              <div className="a">Git worktrees share one object store, so a lane costs about the size of your checked-out files. node_modules is linked to the main checkout.</div>
-            </details>
-            <details>
-              <summary>What happens when my PC is off?</summary>
-              <div className="a">Nothing runs. Your phone and laptop talk to the PC, and Night shift needs it awake.</div>
-            </details>
-            <details>
-              <summary>What happens at a usage limit?</summary>
-              <div className="a">The thread stops and says so. Pick another account and send again, and queued messages move with it. Relay can do that for you if you turn it on, but check your plan's terms first.</div>
-            </details>
-            <details>
-              <summary>Which systems does it run on?</summary>
-              <div className="a">Windows 10 and 11 are what we build and test.</div>
-            </details>
-            <details>
-              <summary>Can two people work in one thread?</summary>
-              <div className="a">No. Threads belong to one computer. Review links let people outside the team comment on a running page.</div>
-            </details>
-          </div>
-          {" "}
         </div>
+        <Faq id="faq" items={QUESTIONS} />
       </div>
     </section>
   );

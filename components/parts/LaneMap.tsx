@@ -1,3 +1,18 @@
+// Branch paths. Merged lanes carry on along main after the merge node, so their dots flow back in.
+const BLUE = "M130 370L227.5 70H960L1057.5 370";
+const AMBER = "M270 370L335 170H780";
+const GREEN = "M430 370L462.5 270H800L832.5 370";
+
+// Each lane has three agents at work: a lead dot and two smaller ones, spread over the loop.
+const LANES = [
+  { path: `${BLUE}H1170`, colour: "#6fb0ff", dur: 14, fade: 0.95 },
+  { path: `${GREEN}H1170`, colour: "#5ec48a", dur: 9, fade: 0.86 },
+];
+const SIZES = [6.5, 4.5, 4.5];
+
+// Commits that land on main, one after another through the loop.
+const COMMITS = [70, 200, 350, 520, 660, 900, 990, 1120];
+
 export function LaneMap() {
   return (
     <div className="lane-map live">
@@ -5,19 +20,40 @@ export function LaneMap() {
         {" "}
         <path className="lm-main" d="M30 370H1170" />
         {" "}
-        <path className="lm-a" d="M130 370L227.5 70H960L1057.5 370" stroke="#6fb0ff" />
-        <path className="lm-a" d="M270 370L335 170H780" stroke="#eaa93c" />
-        <path className="lm-a" d="M430 370L462.5 270H800L832.5 370" stroke="#5ec48a" />
+        <path className="lm-a" d={BLUE} stroke="#6fb0ff" />
+        <path className="lm-a" d={AMBER} stroke="#eaa93c" />
+        <path className="lm-a" d={GREEN} stroke="#5ec48a" />
         {" "}
-        <circle r="7" fill="#6fb0ff">
-          <animateMotion dur="11s" begin="0s" repeatCount="indefinite" path="M130 370L227.5 70H960L1057.5 370" />
-        </circle>
-        <circle r="7" fill="#eaa93c">
-          <animateMotion dur="11s" begin="0s" repeatCount="indefinite" path="M270 370L335 170H780" />
-        </circle>
-        <circle r="7" fill="#5ec48a">
-          <animateMotion dur="11s" begin="0s" repeatCount="indefinite" path="M430 370L462.5 270H800L832.5 370" />
-        </circle>
+        <g className="lm-commits">
+          {COMMITS.map((x, i) => (
+            <circle key={x} cx={x} cy="370" r="3.5" opacity="0">
+              <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.04;0.9;1" dur="12s" begin={`${-12 + i * 1.4}s`} repeatCount="indefinite" />
+            </circle>
+          ))}
+        </g>
+        {" "}
+        {LANES.map((lane) =>
+          SIZES.map((r, i) => {
+            const begin = `${(-lane.dur * i) / SIZES.length}s`;
+            return (
+              <circle key={`${lane.colour}${i}`} r={r} fill={lane.colour} opacity="0">
+                <animateMotion dur={`${lane.dur}s`} begin={begin} repeatCount="indefinite" path={lane.path} />
+                <animate attributeName="opacity" values="0;1;1;0" keyTimes={`0;0.05;${lane.fade};1`} dur={`${lane.dur}s`} begin={begin} repeatCount="indefinite" />
+              </circle>
+            );
+          }),
+        )}
+        {" "}
+        {/* The conflicting lane: its agents reach the ring, wait there and go no further. */}
+        {SIZES.map((r, i) => {
+          const begin = `${(-7.5 * i) / SIZES.length}s`;
+          return (
+            <circle key={`amber${i}`} r={r} fill="#eaa93c" opacity="0">
+              <animateMotion dur="7.5s" begin={begin} repeatCount="indefinite" path={AMBER} keyPoints="0;1;1" keyTimes="0;0.72;1" calcMode="linear" />
+              <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.8;1" dur="7.5s" begin={begin} repeatCount="indefinite" />
+            </circle>
+          );
+        })}
         {" "}
         <circle className="lm-node" cx="130" cy="370" r="7" />
         <circle className="lm-node" cx="270" cy="370" r="7" />
@@ -25,6 +61,10 @@ export function LaneMap() {
         <circle className="lm-node" cx="832.5" cy="370" r="7" />
         <circle className="lm-node" cx="1057.5" cy="370" r="7" />
         {" "}
+        <circle cx="780" cy="170" r="9" fill="none" stroke="#eaa93c" strokeWidth="1.5" opacity="0">
+          <animate attributeName="r" values="9;19" dur="2.5s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0.7;0" dur="2.5s" repeatCount="indefinite" />
+        </circle>
         <circle cx="780" cy="170" r="9" fill="none" stroke="#eaa93c" strokeWidth="2" />
         {" "}
         <text className="lm-b" x="30" y="404">main</text>

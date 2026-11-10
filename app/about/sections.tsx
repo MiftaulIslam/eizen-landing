@@ -1,5 +1,6 @@
-import { Arrow } from "@/components/parts/Arrow";
 import { VectorField } from "@/components/parts/VectorField";
+import { Button } from "@/components/ui/Button";
+import { ArrowLink } from "@/components/ui/ArrowLink";
 
 export function Hero() {
   return (
@@ -91,9 +92,9 @@ export function TheMark() {
         </div>
         {" "}
         <div className="btns" style={{ marginTop: "40px" }}>
-          <a className="btn line" href="/assets/brand/mark-lamp.svg" download="">Mark on dark</a>
-          <a className="btn line" href="/assets/brand/mark-lamp-ink.svg" download="">Mark on light</a>
-          <a className="btn line" href="/assets/brand/app-icon.png" download="">App icon</a>
+          <Button href="/assets/brand/mark-lamp.svg" variant="outline" download>Mark on dark</Button>
+          <Button href="/assets/brand/mark-lamp-ink.svg" variant="outline" download>Mark on light</Button>
+          <Button href="/assets/brand/app-icon.png" variant="outline" download>App icon</Button>
         </div>
       </div>
     </section>
@@ -112,10 +113,9 @@ export function BuiltOn() {
           <div className="stack rise">
             <p className="body">
               Eizen began as a Tauri port of{" "}
-              <a className="lnk" href="https://github.com/NazmusSayad/offsite">
+              <ArrowLink href="https://github.com/NazmusSayad/offsite" external>
                 an open-source project
-                <Arrow />
-              </a>
+              </ArrowLink>
               {" "}by Nazmus Sayad, released under the MIT license, and it keeps that project's approach of using the same sessions as the CLIs.
             </p>
             <p className="body">The site's type is Newsreader, Schibsted Grotesk and JetBrains Mono.</p>
@@ -154,110 +154,99 @@ export function Credits() {
                 <th scope="row">Star trails above the Blanco telescope (video)</th>
                 <td data-l="Credit">CTIO/NOIRLab/NSF/AURA/D. Munizaga</td>
                 <td data-l="Source">
-                  <a className="lnk" href="https://noirlab.edu/public/videos/CTIO_4m_Startrails_CometMode_DMunizaga-001-CC/">
+                  <ArrowLink href="https://noirlab.edu/public/videos/CTIO_4m_Startrails_CometMode_DMunizaga-001-CC/" external>
                     Source
-                    <Arrow />
-                  </a>
+                  </ArrowLink>
                 </td>
               </tr>
               <tr>
                 <th scope="row">Starry sky above the Visitor Center telescope (video)</th>
                 <td data-l="Credit">KPNO/NOIRLab/NSF/AURA/R. Sparks</td>
                 <td data-l="Source">
-                  <a className="lnk" href="https://noirlab.edu/public/videos/Rob-VC-Telescope-TL-9-27-24-CC/">
+                  <ArrowLink href="https://noirlab.edu/public/videos/Rob-VC-Telescope-TL-9-27-24-CC/" external>
                     Source
-                    <Arrow />
-                  </a>
+                  </ArrowLink>
                 </td>
               </tr>
               <tr>
                 <th scope="row">Milky Way and Moon over SOAR (video)</th>
                 <td data-l="Credit">NOIRLab/NSF/AURA/P. Horálek</td>
                 <td data-l="Source">
-                  <a className="lnk" href="https://noirlab.edu/public/videos/2025_04_20-21_Pachon_TLS_15mm_SOAR_Moon_MT-CC1/">
+                  <ArrowLink href="https://noirlab.edu/public/videos/2025_04_20-21_Pachon_TLS_15mm_SOAR_Moon_MT-CC1/" external>
                     Source
-                    <Arrow />
-                  </a>
+                  </ArrowLink>
                 </td>
               </tr>
               <tr>
                 <th scope="row">Lights of the Night Show</th>
                 <td data-l="Credit">International Gemini Observatory/NOIRLab/NSF/AURA/J. Pollard</td>
                 <td data-l="Source">
-                  <a className="lnk" href="https://commons.wikimedia.org/wiki/File:Lights_of_the_Night_Show_(iotw2525a).jpg">
+                  <ArrowLink href="https://commons.wikimedia.org/wiki/File:Lights_of_the_Night_Show_(iotw2525a).jpg" external>
                     Source
-                    <Arrow />
-                  </a>
+                  </ArrowLink>
                 </td>
               </tr>
               <tr>
                 <th scope="row">Star Trails Above Gemini North</th>
                 <td data-l="Credit">International Gemini Observatory/NOIRLab/NSF/AURA/T. Matsopoulos</td>
                 <td data-l="Source">
-                  <a className="lnk" href="https://commons.wikimedia.org/wiki/File:Star_Trails_Above_Gemini_North_(iotw2506a).jpg">
+                  <ArrowLink href="https://commons.wikimedia.org/wiki/File:Star_Trails_Above_Gemini_North_(iotw2506a).jpg" external>
                     Source
-                    <Arrow />
-                  </a>
+                  </ArrowLink>
                 </td>
               </tr>
               <tr>
                 <th scope="row">Stars Swirl above Gemini North</th>
                 <td data-l="Credit">NOIRLab/NSF/AURA</td>
                 <td data-l="Source">
-                  <a className="lnk" href="https://commons.wikimedia.org/wiki/File:Stars_Swirl_above_Gemini_North_(5D-54206-seq-CC5).jpg">
+                  <ArrowLink href="https://commons.wikimedia.org/wiki/File:Stars_Swirl_above_Gemini_North_(5D-54206-seq-CC5).jpg" external>
                     Source
-                    <Arrow />
-                  </a>
+                  </ArrowLink>
                 </td>
               </tr>
               <tr>
                 <th scope="row">Trails Through the Night Sky</th>
                 <td data-l="Credit">KPNO/NOIRLab/NSF/AURA</td>
                 <td data-l="Source">
-                  <a className="lnk" href="https://commons.wikimedia.org/wiki/File:Trails_Through_the_Night_Sky_(iotw2033a).jpg">
+                  <ArrowLink href="https://commons.wikimedia.org/wiki/File:Trails_Through_the_Night_Sky_(iotw2033a).jpg" external>
                     Source
-                    <Arrow />
-                  </a>
+                  </ArrowLink>
                 </td>
               </tr>
               <tr>
                 <th scope="row">Trails Near and Far</th>
                 <td data-l="Credit">CTIO/NOIRLab/NSF/AURA/D. Munizaga</td>
                 <td data-l="Source">
-                  <a className="lnk" href="https://commons.wikimedia.org/wiki/File:Trails_Near_and_Far_(iotw2009a).jpg">
+                  <ArrowLink href="https://commons.wikimedia.org/wiki/File:Trails_Near_and_Far_(iotw2009a).jpg" external>
                     Source
-                    <Arrow />
-                  </a>
+                  </ArrowLink>
                 </td>
               </tr>
               <tr>
                 <th scope="row">Rubin Observatory Under the Milky Way</th>
                 <td data-l="Credit">Hernán Stockebrand</td>
                 <td data-l="Source">
-                  <a className="lnk" href="https://commons.wikimedia.org/wiki/File:Rubin_Observatory_Under_the_Milky_Way_(noirlab2409b).jpg">
+                  <ArrowLink href="https://commons.wikimedia.org/wiki/File:Rubin_Observatory_Under_the_Milky_Way_(noirlab2409b).jpg" external>
                     Source
-                    <Arrow />
-                  </a>
+                  </ArrowLink>
                 </td>
               </tr>
               <tr>
                 <th scope="row">Milky Way Reflections</th>
                 <td data-l="Credit">RubinObs/NOIRLab/SLAC/DOE/NSF/AURA/B. Quint</td>
                 <td data-l="Source">
-                  <a className="lnk" href="https://commons.wikimedia.org/wiki/File:Milky_Way_Reflections_(rubin-20250523-Rubin-Patio-2-0001).jpg">
+                  <ArrowLink href="https://commons.wikimedia.org/wiki/File:Milky_Way_Reflections_(rubin-20250523-Rubin-Patio-2-0001).jpg" external>
                     Source
-                    <Arrow />
-                  </a>
+                  </ArrowLink>
                 </td>
               </tr>
               <tr>
                 <th scope="row">Milky Way Shines over Snowy La Silla</th>
                 <td data-l="Credit">ESO/José Francisco Salgado</td>
                 <td data-l="Source">
-                  <a className="lnk" href="https://commons.wikimedia.org/wiki/File:Milky_Way_Shines_over_Snowy_La_Silla.jpg">
+                  <ArrowLink href="https://commons.wikimedia.org/wiki/File:Milky_Way_Shines_over_Snowy_La_Silla.jpg" external>
                     Source
-                    <Arrow />
-                  </a>
+                  </ArrowLink>
                 </td>
               </tr>
             </tbody>
@@ -265,10 +254,9 @@ export function Credits() {
         </div>
         <p className="tbl-note small">
           Colour on the Blanco and SOAR footage has been adjusted, and clips are trimmed and shortened.{" "}
-          <a className="lnk" href="https://creativecommons.org/licenses/by/4.0/">
+          <ArrowLink href="https://creativecommons.org/licenses/by/4.0/" external>
             CC BY 4.0
-            <Arrow />
-          </a>
+          </ArrowLink>
         </p>
       </div>
     </section>

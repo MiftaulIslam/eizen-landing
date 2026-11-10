@@ -1,4 +1,7 @@
 import { Approval } from "@/components/parts/Approval";
+import { FeatureScenes } from "@/components/ui/FeatureScenes";
+import { ApprovalScene, ChecksScene, LearnedRulesScene, PermissionModesScene, ProtectedFilesScene, SafetyNetScene } from "@/components/scenes/security";
+import { IconApproval, IconChecks, IconLock, IconModes, IconRules, IconSafetyNet } from "@/components/scenes/icons";
 
 export function Hero() {
   return (
@@ -237,32 +240,16 @@ export function LimitingTheAgent() {
           {" "}
         </div>
         {" "}
-        <div className="grid" style={{ "--n": "3" }}>
-          <div className="cell rise">
-            <h3>Permission modes</h3>
-            <p>From asking before every edit to Bypass permissions, shown in the composer at all times.</p>
-          </div>
-          <div className="cell rise">
-            <h3>Approvals</h3>
-            <p>The exact command, and why it is risky when it is.</p>
-          </div>
-          <div className="cell rise">
-            <h3>Risky command safety net</h3>
-            <p>An optional setting that makes recursive deletes, force pushes and publishing stop and ask in every mode.</p>
-          </div>
-          <div className="cell rise">
-            <h3>Learned rules</h3>
-            <p>Requests you approve repeatedly are offered as rules. Risky commands are never offered.</p>
-          </div>
-          <div className="cell rise">
-            <h3>Protected files</h3>
-            <p>Patterns that agents can read and never edit, in Eizen or in the CLI.</p>
-          </div>
-          <div className="cell rise">
-            <h3>Project checks</h3>
-            <p>Your tests must pass before a turn that edited files can finish.</p>
-          </div>
-        </div>
+        <FeatureScenes
+          items={[
+            { title: "Permission modes", text: "From asking before every edit to Bypass permissions, shown in the composer at all times.", icon: <IconModes />, scene: <PermissionModesScene /> },
+            { title: "Approvals", text: "The exact command, and why it is risky when it is.", icon: <IconApproval />, scene: <ApprovalScene /> },
+            { title: "Risky command safety net", text: "An optional setting that makes recursive deletes, force pushes and publishing stop and ask in every mode.", icon: <IconSafetyNet />, scene: <SafetyNetScene /> },
+            { title: "Learned rules", text: "Requests you approve repeatedly are offered as rules. Risky commands are never offered.", icon: <IconRules />, scene: <LearnedRulesScene /> },
+            { title: "Protected files", text: "Patterns that agents can read and never edit, in Eizen or in the CLI.", icon: <IconLock />, scene: <ProtectedFilesScene /> },
+            { title: "Project checks", text: "Your tests must pass before a turn that edited files can finish.", icon: <IconChecks />, scene: <ChecksScene /> },
+          ]}
+        />
       </div>
     </section>
   );

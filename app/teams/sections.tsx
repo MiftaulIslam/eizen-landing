@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Arrow } from "@/components/parts/Arrow";
+import { Button } from "@/components/ui/Button";
+import { ArrowLink } from "@/components/ui/ArrowLink";
 
 export function Hero() {
   return (
@@ -449,10 +451,9 @@ export function HowItHelps() {
         </div>
         {" "}
         <p style={{ marginTop: "32px" }}>
-          <Link className="lnk" href="/compare">
+          <ArrowLink href="/compare">
             Compare with other tools
-            <Arrow />
-          </Link>
+          </ArrowLink>
         </p>
       </div>
     </section>
@@ -537,8 +538,8 @@ export function StartWithOneTeam() {
           <p className="lead">The setup checklist handles Claude Code, sign-in and Git, so you won't need a terminal.</p>
           {" "}
           <div className="btns" style={{ marginTop: "16px" }}>
-            <Link className="btn fill" href="/download">Download for Windows</Link>
-            <Link className="btn line" href="/teams">Plan a team rollout</Link>
+            <Button href="/download">Download for Windows</Button>
+            <Button href="/teams" variant="outline">Plan a team rollout</Button>
           </div>
           {" "}
         </div>

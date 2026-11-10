@@ -3,6 +3,12 @@ import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./styles/site.css";
 import "./styles/live.css";
 import "./styles/steps.css";
+import "./styles/nav.css";
+import "./styles/reveal.css";
+import "./styles/buttons.css";
+import "./styles/home.css";
+import "./styles/interact.css";
+import "./styles/faq.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Button } from "@/components/ui/Button";
 
 export function Hero() {
   return (
@@ -13,8 +13,8 @@ export function Hero() {
           <h1 className="d1">Eizen for Windows</h1>
           <p className="lead">Version 0.1.0, for Windows 10 and 11, 64-bit. About 70 MB.</p>
           <div className="btns" style={{ marginTop: "16px" }}>
-            <a className="btn fill" href="/downloads/Eizen_0.1.0_x64-setup.exe">Download the installer</a>
-            <Link className="btn line" href="/teams">Plan a team rollout</Link>
+            <Button href="/downloads/Eizen_0.1.0_x64-setup.exe">Download the installer</Button>
+            <Button href="/teams" variant="outline">Plan a team rollout</Button>
           </div>
           <p className="note kick">Eizen uses the Claude, Codex or OpenCode accounts you already have.</p>
         </div>

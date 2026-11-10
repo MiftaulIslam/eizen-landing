@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Arrow } from "@/components/parts/Arrow";
 import { FlowLine } from "@/components/parts/FlowLine";
 import { Tunnel } from "@/components/parts/Tunnel";
+import { Button } from "@/components/ui/Button";
 
 export function Hero() {
   return (
@@ -26,7 +27,7 @@ export function Hero() {
           <p className="lead">Agents keep running on your own machine. Everything here is a way of reaching it.</p>
           {" "}
           <div className="btns" style={{ marginTop: "32px" }}>
-            <Link className="btn fill" href="/download">Download for Windows</Link>
+            <Button href="/download">Download for Windows</Button>
           </div>
           {" "}
         </div>

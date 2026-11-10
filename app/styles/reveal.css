@@ -1,0 +1,16 @@
+/* Scroll reveal. Behaviour: lib/effects/reveal.ts.
+   Hidden only when scripts are on (.js is set before first paint) and motion is welcome. Never in
+   the first section of a page, and never on .rise, which has its own entrance. Uses the translate
+   property so an element's own transform is left alone. */
+
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal]:not(.revealed, .rise, .rise *, main > :first-child, main > :first-child *) {
+    opacity: 0;
+    translate: 0 20px;
+  }
+  .js [data-reveal].revealing {
+    transition:
+      opacity 600ms var(--ease) var(--rd, 0ms),
+      translate 700ms cubic-bezier(0.2, 0.7, 0.2, 1) var(--rd, 0ms);
+  }
+}

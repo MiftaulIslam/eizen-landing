@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { Faq, type FaqItem } from "@/components/ui/Faq";
 import { Arrow } from "@/components/parts/Arrow";
 import { Collide } from "@/components/parts/Collide";
 import { DemoLane } from "@/components/parts/DemoLane";
 import { LaneMap } from "@/components/parts/LaneMap";
+import { Button } from "@/components/ui/Button";
 
 export function Hero() {
   return (
@@ -17,7 +19,7 @@ export function Hero() {
           <h1 className="d1">Give each thread its own copy of the repo</h1>
           <p className="lead">Two agents in one folder read each other's half-finished edits, run each other's broken tests and fight over port 3000. A lane keeps them apart.</p>
           <div className="btns" style={{ marginTop: "24px" }}>
-            <Link className="btn fill" href="/download">Download for Windows</Link>
+            <Button href="/download">Download for Windows</Button>
           </div>
         </div>
         {" "}
@@ -304,34 +306,24 @@ export function Limits() {
   );
 }
 
+const QUESTIONS: FaqItem[] = [
+  { q: "Why not run git worktree myself?", a: "You can. Eizen also copies env files, links dependencies, picks a port, tells the agent where it is, and removes links safely before deleting the folder, so a delete can never empty your main node_modules." },
+  { q: "How much disk does a lane use?", a: "About the size of your checked-out files. Git history is shared between worktrees." },
+  { q: "Can a lane start from another branch?", a: "Lanes start from the commit your main checkout is on. Switch branch there first." },
+  { q: "What happens to the thread when I remove a lane?", a: "It leaves the sidebar. The transcript stays with your Claude history on disk." },
+];
+
 export function Questions() {
   return (
-    <section className="sec night ">
+    <section className="sec night">
       <div className="wrap">
-        <div className="split start even">
-          <div className="stack rise">
+        <div className="sec-head solo rise">
+          <div className="stack" style={{ "--s": "16px" }}>
             <p className="kick">Questions</p>
             <h2 className="d2">About lanes</h2>
           </div>
-          <div className="faq">
-            <details>
-              <summary>Why not run git worktree myself?</summary>
-              <div className="a">You can. Eizen also copies env files, links dependencies, picks a port, tells the agent where it is, and removes links safely before deleting the folder, so a delete can never empty your main node_modules.</div>
-            </details>
-            <details>
-              <summary>How much disk does a lane use?</summary>
-              <div className="a">About the size of your checked-out files. Git history is shared between worktrees.</div>
-            </details>
-            <details>
-              <summary>Can a lane start from another branch?</summary>
-              <div className="a">Lanes start from the commit your main checkout is on. Switch branch there first.</div>
-            </details>
-            <details>
-              <summary>What happens to the thread when I remove a lane?</summary>
-              <div className="a">It leaves the sidebar. The transcript stays with your Claude history on disk.</div>
-            </details>
-          </div>
         </div>
+        <Faq id="lanes-faq" items={QUESTIONS} />
       </div>
     </section>
   );

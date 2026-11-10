@@ -1,0 +1,93 @@
+/* Header. Behaviour: lib/effects/nav.ts.
+   The bar's background is two layers clipped with clip-path, a hairline under the ink, so once the
+   page scrolls it can shrink into a centred floating bar without animating width or height.
+   The brand, menu and button slide in by the same distance with translate. */
+
+.top {
+  --bar: 980px;
+  --bar-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --bx: 0px;
+  --ink: rgb(11 13 20 / 0.97);
+}
+.top, .top.solid, .top.open-menu { background: transparent; border-bottom-color: transparent; }
+
+.top::before, .top::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 240ms var(--ease), clip-path 460ms var(--bar-ease);
+}
+.top::before { background: var(--hair); clip-path: inset(0 0 0 0 round 0); }
+.top::after { background: var(--ink); clip-path: inset(0 0 1px 0 round 0); }
+.top.solid::before, .top.solid::after, .top.open-menu::before, .top.open-menu::after { opacity: 1; }
+
+.top > .wrap > .brand, .top > .wrap > .nav, .top > .wrap > .top-cta { transition: translate 460ms var(--bar-ease); }
+
+/* Applied for one frame when the page opens already scrolled, so the bar starts in place. */
+.top.still::before, .top.still::after, .top.still > .wrap > *, .top.still .mega { transition: none !important; }
+
+@media (min-width: 1081px) {
+  .top { --bx: max(16px, (100% - var(--bar)) / 2); }
+  .top > .wrap { container-type: inline-size; --shift: calc((100cqw - var(--bar)) / 2 + 22px); }
+  .top.float::before { clip-path: inset(10px var(--bx) 10px var(--bx) round 14px); }
+  .top.float::after { clip-path: inset(11px calc(var(--bx) + 1px) 11px calc(var(--bx) + 1px) round 13px); }
+  .top.float > .wrap > .brand, .top.float > .wrap > .nav { translate: var(--shift) 0; }
+  .top.float > .wrap > .top-cta { translate: calc(var(--shift) * -1) 0; }
+
+  /* The Product panel hangs under the floating bar as a card of the same width. */
+  .top.float .mega { left: var(--bx); right: var(--bx); top: calc(100% - 4px); border: 1px solid var(--hair); border-radius: 14px; overflow: hidden; }
+  .top.float .mega .wrap { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); padding: 24px 24px 28px; gap: 28px; }
+}
+
+/* The menu: a pill follows the pointer or keyboard focus and rests on the current page. */
+.navmenu { position: relative; isolation: isolate; }
+.nav-pill {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 8px;
+  background: rgb(238 240 245 / 0.09);
+  clip-path: inset(0 var(--pr, 100%) 0 var(--pl, 0) round 8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: clip-path 320ms var(--bar-ease), opacity 200ms var(--ease);
+}
+.nav-pill.on { opacity: 1; }
+.nav-pill.jump { transition: opacity 200ms var(--ease); }
+.navmenu > a, .navmenu > button { position: relative; }
+.navmenu > a[aria-current='page']::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 2px;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: var(--lamp);
+}
+
+.nav-trigger { display: inline-flex; align-items: center; gap: 7px; }
+.nav-chev { width: 10px; height: 6px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; opacity: 0.8; transition: rotate 280ms var(--bar-ease); }
+.nav-trigger[aria-expanded='true'] .nav-chev { rotate: 180deg; }
+
+/* Product panel: fades in and rises a little, then the links follow one after another. */
+.mega { transform: translateY(8px); transition: opacity 160ms var(--ease), transform 160ms var(--ease), visibility 160ms; }
+.mega.open { transform: none; transition: opacity 260ms var(--ease), transform 340ms var(--bar-ease), visibility 0s; }
+.mega.open .mega-list a { animation: nav-in 380ms var(--bar-ease) both; animation-delay: calc(40ms + var(--i, 0) * 24ms); }
+.mega.open .mega-pic { animation: nav-fade 420ms var(--ease) 90ms both; }
+
+@keyframes nav-in { from { opacity: 0; translate: 0 8px; } }
+@keyframes nav-fade { from { opacity: 0; } }
+
+/* Phone drawer: rises a little as it opens and its links arrive in order. */
+@media (max-width: 1080px) {
+  .drawer { translate: 0 -6px; transition: opacity 200ms var(--ease), visibility 200ms, translate 260ms var(--bar-ease); }
+  .top.open-menu .drawer { translate: none; transition: opacity 220ms var(--ease), visibility 0s, translate 320ms var(--bar-ease); }
+  .drawer .drawer-cta { --i: 12; display: flex; min-height: 52px; padding: 0 20px; }
+  .top.open-menu .drawer > * { animation: nav-in 420ms var(--bar-ease) both; animation-delay: calc(60ms + var(--i, 0) * 22ms); }
+  .menu-btn { min-height: 44px; padding: 8px 6px; }
+}

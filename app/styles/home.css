@@ -1,0 +1,149 @@
+/* home: the hero lanes, the screenshot carousel, the lane map, the Lanes beats, the day gallery
+   and every slanted picture frame (.bars). Behaviour: lib/effects/home.ts. */
+
+/* ---------- Hero: three lanes at work ---------- */
+.hero-cards { width: 348px; }
+.hero-cards .hc {
+  --c: var(--ok);
+  padding: 12px 14px 13px 16px;
+  background: rgb(17 21 20 / 0.92);
+  border-color: rgb(232 235 231 / 0.14);
+  box-shadow: 0 18px 44px rgb(0 0 0 / 0.5);
+  translate: calc(var(--mx, 0) * var(--z, 8) * 1px) calc(var(--my, 0) * var(--z, 8) * 1px);
+}
+.hero-cards .hc:nth-of-type(1) { --z: 6; }
+.hero-cards .hc:nth-of-type(2) { --z: 11; }
+.hero-cards .hc:nth-of-type(3) { --z: 16; }
+.hero-cards .hc[data-state='work'] { --c: var(--mv); }
+.hero-cards .hc[data-state='wait'] { --c: var(--hd); }
+/* A thin edge in the lane's state colour. */
+.hero-cards .hc::before { content: ''; position: absolute; left: 0; top: 12px; bottom: 12px; width: 2px; border-radius: 0 2px 2px 0; background: var(--c); transition: background-color 300ms var(--ease); }
+.hc-top { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.hc-top b { flex: 1; min-width: 0; }
+.hc-file { flex: none; font: 400 11px/1.6 var(--mono); color: var(--ut3); }
+.hc-file .sw { justify-items: end; }
+.hero-cards .hc .m { margin-top: 2px; }
+.hero-cards .hc .st { margin-top: 6px; font-size: 13px; color: var(--ut2); }
+.hero-cards .hc[data-state='done'] .st, .hero-cards .hc:not([data-state]) .st { color: var(--ut); }
+
+.lamp { position: relative; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--c); transition: background-color 300ms var(--ease); }
+.lamp::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: inherit; opacity: 0; }
+.hc[data-state='work'] .lamp::after { animation: lamp-ping 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) infinite; }
+.hc[data-state='wait'] .lamp { animation: lamp-wait 1.3s ease-in-out infinite; }
+@keyframes lamp-ping { 0% { opacity: 0.75; transform: scale(1); } 100% { opacity: 0; transform: scale(2.9); } }
+@keyframes lamp-wait { 50% { opacity: 0.35; } }
+
+/* One segment per stage. Without scripts every segment is full and the lamp is green. */
+.hc-track { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 3px; margin-top: 10px; }
+.hc-track i { position: relative; height: 3px; border-radius: 2px; background: var(--ui3); overflow: hidden; }
+.hc-track i::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: var(--c); transform-origin: left; transition: background-color 300ms var(--ease); }
+.hc[data-state] .hc-track i::after { transform: scaleX(0); }
+.hc[data-state] .hc-track i.done::after { transform: scaleX(1); }
+.hc[data-state='work'] .hc-track i.on::after { animation: seg-fill var(--dur, 1500ms) linear forwards; }
+.hc[data-state='wait'] .hc-track i.on::after { transform: scaleX(0.3); animation: lamp-wait 1.3s ease-in-out infinite; }
+@keyframes seg-fill { from { transform: scaleX(0.04); } to { transform: scaleX(1); } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .hero-cards .hc { animation: hc-in 820ms cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(240ms + var(--n, 0) * 140ms); }
+}
+@keyframes hc-in { from { opacity: 0; transform: translate(-7px, 22px); } }
+
+/* ---------- Screenshot carousel: the caption line is the clock ---------- */
+.cycle .slides > .was { opacity: 1; z-index: 1; transition: none; }
+.cycle .slides > .on { z-index: 2; }
+.cycle .slides > .on.in { transition: none; animation: slide-in 1000ms cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+/* The leading edge leans at the logo's slope: 0.325 of the slide height, 20% of its width. */
+@keyframes slide-in {
+  from { clip-path: polygon(0 0, 0 0, -20% 100%, 0 100%); transform: scale(1.035); }
+  to { clip-path: polygon(0 0, 120% 0, 100% 100%, 0 100%); transform: scale(1); }
+}
+.cycle .cycle-caps button.on::after { transform: scaleX(0); transition: none; animation: cap-line var(--every, 4200ms) linear forwards; }
+.cycle.hold .cycle-caps button.on::after, .cycle:not(.seen) .cycle-caps button.on::after { animation-play-state: paused; }
+@keyframes cap-line { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* ---------- Lane map ---------- */
+.lm-commits circle { fill: var(--fg2); }
+
+/* ---------- Lanes: the beats follow the recording ---------- */
+.lanes-txt .beat { position: relative; transition: color 400ms var(--ease); }
+.lanes-txt .beat b { transition: color 400ms var(--ease); }
+.lanes-txt .beat::before, .lanes-txt .beat::after { content: ''; position: absolute; left: -22px; top: 4px; bottom: 4px; width: 2px; border-radius: 1px; opacity: 0; transition: opacity 400ms var(--ease), transform 400ms var(--ease); }
+.lanes-txt .ticks .beat::before, .lanes-txt .ticks .beat::after { top: 14px; bottom: 14px; }
+.lanes-txt .beat::before { background: var(--hair); }
+.lanes-txt .beat::after { background: var(--accent); transform-origin: top; transform: scaleY(0); }
+.lanes-txt.synced .beat::before, .lanes-txt.synced .beat::after { opacity: 1; }
+.lanes-txt.synced .beat.on::after { transform: scaleY(var(--p, 0)); transition: opacity 400ms var(--ease); }
+.lanes-txt.synced .beat:not(.on) { color: var(--fg3); }
+.lanes-txt.synced .beat:not(.on) b { color: var(--fg2); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .words .wd { display: inline-block; }
+  .js .rise:not(.in) .words .wd { opacity: 0; }
+  .js .rise.in .words .wd { animation: wd-in 800ms cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(120ms + var(--i, 0) * 55ms); }
+  .js .lanes-txt.rise:not(.in) .lanes-more { opacity: 0; }
+  .js .lanes-txt.rise.in .lanes-more { animation: wd-in 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: 950ms; }
+}
+@keyframes wd-in { from { opacity: 0; transform: translateY(0.4em); } }
+
+/* ---------- Slanted picture frames (.bars), on every page ---------- */
+/* live.css gives every .bar the 6px height of a progress bar; a frame is as tall as the mark's bar. */
+.bars .bar { height: var(--h); border-radius: 0; overflow: visible; background: var(--n3); }
+.bars .bar img { --wo: calc(var(--h) * var(--slope)); }
+.bars .bar:nth-child(2) { --b: 1; }
+.bars .bar:nth-child(3) { --b: 2; }
+.bars .bar img.was { opacity: 1; z-index: 1; transition: none; }
+.bars .bar img.on { z-index: 2; }
+/* An incoming picture is revealed by its wipe alone; fading it in as well doubles the two pictures. */
+.bars .bar img.on.in { transition: none; }
+@keyframes bar-wipe {
+  from { clip-path: polygon(0 0, 0 0, calc(0px - var(--wo)) 100%, 0 100%); }
+  to { clip-path: polygon(0 0, calc(100% + var(--wo)) 0, 100% 100%, 0 100%); }
+}
+@keyframes bar-drift { from { transform: scale(1.07) translateX(-1.6%); } to { transform: scale(1.07) translateX(1.6%); } }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* The bars slide in along the page one after another, then the photos drift slowly. */
+  .js .bars.rise .bar { transition: translate 1000ms cubic-bezier(0.2, 0.7, 0.2, 1), opacity 700ms var(--ease); transition-delay: calc(var(--b, 0) * 110ms); }
+  .js .bars.rise:not(.in) .bar { translate: -48px 0; opacity: 0; }
+  .bars:not(.day-bars) .bar img { animation: bar-drift 26s ease-in-out infinite alternate; animation-delay: calc(var(--b, 0) * -9s); }
+  .bars:not(.day-bars) .bar img.on.in { animation: bar-wipe 1100ms cubic-bezier(0.2, 0.7, 0.2, 1) both, bar-drift 26s ease-in-out infinite alternate; }
+  .bars:not(.seen) .bar img { animation-play-state: paused; }
+}
+
+/* ---------- A working day: one picture through the three bars ---------- */
+/* Each picture covers the whole group (4 bar heights tall, full width) and is shifted back by its
+   bar's offset, so the three bars read as one frame. Offsets follow site.css: margins of 3h and
+   1.5h times the slope, rows 1.5h apart, the middle bar 62% wide. */
+.day-bars { overflow: clip; }
+.day-bars .bar { transition: opacity 600ms var(--ease); }
+.day-bars .bar img { inset: auto; max-width: none; height: calc(var(--h) * 4); object-position: var(--pos, 0 0); --wo: calc(var(--h) * 4 * var(--slope)); }
+.day-bars .bar:nth-child(1) img { top: 0; left: calc(var(--h) * -3 * var(--slope)); width: calc(100% + var(--h) * 3 * var(--slope)); }
+.day-bars .bar:nth-child(2) img { top: calc(var(--h) * -1.5); left: calc(var(--h) * -1.5 * var(--slope)); width: calc(100% / 0.62); }
+.day-bars .bar:nth-child(3) img { top: calc(var(--h) * -3); left: 0; width: calc(100% + var(--h) * 3 * var(--slope)); }
+.day.ready .day-bars .bar:not(.lit) { opacity: 0.55; }
+@media (prefers-reduced-motion: no-preference) {
+  .day-bars .bar img.on.in { animation: bar-wipe 1000ms cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--b, 0) * 90ms); }
+}
+
+.day-cols .cell { position: relative; }
+.day-cols .cell:focus-visible { outline-offset: 6px; }
+.day-cols .cell h3, .day-cols .cell p { transition: color 300ms var(--ease); }
+.day-cols .cell::before { content: ''; position: absolute; left: 0; right: 0; top: -1px; height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: left; }
+.day-cols .cell.on::before { transform: scaleX(1); }
+.day.ready .day-cols .cell:not(.on) h3 { color: var(--fg2); }
+.day.ready .day-cols .cell:not(.on) p { color: var(--fg3); }
+.day.auto .day-cols .cell.on::before { transform: scaleX(0); animation: cap-line var(--every, 5200ms) linear forwards; }
+.day:not(.seen) .day-cols .cell.on::before { animation-play-state: paused; }
+
+@media (max-width: 720px) {
+  /* On a phone the bars are short; look closer at the part of each picture that matters. */
+  .day-bars { --h: 24vw; }
+  .day-bars .bar img { transform: scale(1.3); transform-origin: var(--pos, 0 0); }
+  .lanes-txt .beat::before, .lanes-txt .beat::after { left: -12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cycle .cycle-caps button.on::after { animation: none; transform: scaleX(1); }
+  .day.auto .day-cols .cell.on::before { animation: none; transform: scaleX(1); }
+  .hc .lamp, .hc .lamp::after, .hc-track i::after { animation: none !important; }
+}
