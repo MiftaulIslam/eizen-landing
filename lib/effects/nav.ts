@@ -39,11 +39,15 @@ function header(scope: Scope, top: HTMLElement) {
     if (!menu) return;
     top.classList.toggle("open-menu", next);
     menu.setAttribute("aria-expanded", String(next));
-    menu.textContent = next ? "Close" : "Menu";
+    const label = menu.querySelector(".menu-lbl") ?? menu;
+    label.textContent = next ? "Close" : "Menu";
     document.body.style.overflow = next ? "hidden" : "";
   };
   if (menu) {
     scope.listen(menu, "click", () => setMenu(!top.classList.contains("open-menu")));
+    // Tapping the dimmed page behind the sheet closes it.
+    const scrim = top.querySelector(".drawer-scrim");
+    if (scrim) scope.listen(scrim, "click", () => setMenu(false));
     // A link to the page already showing does not replace the header, so close it by hand.
     if (drawer) scope.listen(drawer, "click", (event) => (event.target as Element).closest("a") && setMenu(false));
     scope.onStop(() => setMenu(false));
@@ -169,8 +173,9 @@ function pill(scope: Scope, menu: HTMLElement) {
     // A pill that is hidden appears at its item instead of sliding in from the last one.
     const jump = instant || !mark.classList.contains("on");
     if (jump) mark.classList.add("jump");
-    mark.style.setProperty("--pl", `${next.offsetLeft}px`);
-    mark.style.setProperty("--pr", `${menu.clientWidth - next.offsetLeft - next.offsetWidth}px`);
+    // Set on the menu so the pill and the line under it both follow.
+    menu.style.setProperty("--pl", `${next.offsetLeft}px`);
+    menu.style.setProperty("--pr", `${menu.clientWidth - next.offsetLeft - next.offsetWidth}px`);
     if (jump) {
       void mark.offsetWidth;
       mark.classList.remove("jump");

@@ -11,6 +11,7 @@ export function NavMenu({ label, className, children }: { label: string; classNa
     <nav className={className ? `navmenu ${className}` : "navmenu"} aria-label={label} data-nav-menu="">
       {children}
       <span className="nav-pill" aria-hidden="true" />
+      <span className="nav-line" aria-hidden="true" />
     </nav>
   );
 }

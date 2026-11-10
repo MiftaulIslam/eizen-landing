@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Arrow } from "@/components/parts/Arrow";
 import { Mark } from "@/components/parts/Mark";
 import { Button } from "@/components/ui/Button";
 import { NavItem, NavMenu, NavTrigger } from "@/components/ui/NavMenu";
@@ -6,6 +7,24 @@ import { NavItem, NavMenu, NavTrigger } from "@/components/ui/NavMenu";
 // The Product panel only opens above 1080 px. Below that its pictures resolve to this blank instead of downloading.
 const BLANK = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 const megaSizes = "(max-width: 1080px) 1px, min(680px, calc(50vw - 70px))";
+
+// The phone menu: product pages with their one-line summaries, then the pages for adopting it.
+const PRODUCT = [
+  ["/product", "Tour", "The whole window, part by part"],
+  ["/lanes", "Lanes", "A worktree for every thread"],
+  ["/browser", "Browser", "The agent can see the page"],
+  ["/memory", "Memory", "Why every line is there"],
+  ["/automation", "Automation", "Schedules, triggers, Night shift"],
+  ["/meetings", "Meetings", "Recordings into threads"],
+  ["/reach", "Reach", "Phone, laptop, review links"],
+  ["/connections", "Connections", "GitHub, Linear, Neon and more"],
+] as const;
+const ADOPT = [
+  ["/teams", "For teams"],
+  ["/compare", "Compare"],
+  ["/security", "Security"],
+  ["/about", "About"],
+] as const;
 
 export function Header({ solid = false, current }: { solid?: boolean; current?: string }) {
   return (
@@ -33,7 +52,13 @@ export function Header({ solid = false, current }: { solid?: boolean; current?: 
           <Button href="/download" variant="light" size="sm">Download</Button>
         </div>
         {" "}
-        <button type="button" className="menu-btn" aria-expanded="false" aria-controls="site-drawer">Menu</button>
+        <button type="button" className="menu-btn" aria-expanded="false" aria-controls="site-drawer">
+          <span className="menu-ico" aria-hidden="true">
+            <i />
+            <i />
+          </span>
+          <span className="menu-lbl">Menu</span>
+        </button>
         {" "}
       </div>
       {" "}
@@ -93,24 +118,32 @@ export function Header({ solid = false, current }: { solid?: boolean; current?: 
         {" "}
       </div>
       {" "}
+      <div className="drawer-scrim" aria-hidden="true" />
       <div className="drawer" id="site-drawer">
-        {" "}
-        <Link href="/product" prefetch={false} style={{ "--i": 0 }}>Tour</Link>
-        <Link href="/lanes" prefetch={false} style={{ "--i": 1 }}>Lanes</Link>
-        <Link href="/browser" prefetch={false} style={{ "--i": 2 }}>Browser</Link>
-        <Link href="/memory" prefetch={false} style={{ "--i": 3 }}>Memory</Link>
-        <Link href="/automation" prefetch={false} style={{ "--i": 4 }}>Automation</Link>
-        <Link href="/meetings" prefetch={false} style={{ "--i": 5 }}>Meetings</Link>
-        <Link href="/reach" prefetch={false} style={{ "--i": 6 }}>Reach</Link>
-        <Link href="/connections" prefetch={false} style={{ "--i": 7 }}>Connections</Link>
-        {" "}
-        <Link href="/lanes" prefetch={false} style={{ "--i": 8 }}>Lanes</Link>
-        <Link href="/teams" prefetch={false} style={{ "--i": 9 }}>For teams</Link>
-        <Link href="/compare" prefetch={false} style={{ "--i": 10 }}>Compare</Link>
-        <Link href="/security" prefetch={false} style={{ "--i": 11 }}>Security</Link>
-        {" "}
-        <Button href="/download" variant="light" prefetch={false} className="drawer-cta">Download for Windows</Button>
-        {" "}
+        <span className="drawer-grip" aria-hidden="true" />
+        <p className="drawer-kick">Product</p>
+        <div className="drawer-grid">
+          {PRODUCT.map(([href, name, line], i) => (
+            <Link key={href} href={href} prefetch={false} style={{ "--i": i }} aria-current={current === href ? "page" : undefined}>
+              <b>{name}</b>
+              <span>{line}</span>
+            </Link>
+          ))}
+        </div>
+        <p className="drawer-kick">Adopting it</p>
+        <div className="drawer-list">
+          {ADOPT.map(([href, name], i) => (
+            <Link key={href} href={href} prefetch={false} style={{ "--i": PRODUCT.length + i }} aria-current={current === href ? "page" : undefined}>
+              {name}
+              <Arrow />
+            </Link>
+          ))}
+        </div>
+        <div className="drawer-foot">
+          <Button href="/download" variant="light" prefetch={false} className="drawer-cta">
+            Download for Windows
+          </Button>
+        </div>
       </div>
       {" "}
     </header>
