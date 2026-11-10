@@ -67,7 +67,7 @@
 /* ---------- Lanes: the beats follow the recording ---------- */
 .lanes-txt .beat { position: relative; transition: color 400ms var(--ease); }
 .lanes-txt .beat b { transition: color 400ms var(--ease); }
-.lanes-txt .beat::before, .lanes-txt .beat::after { content: ''; position: absolute; left: -22px; top: 4px; bottom: 4px; width: 2px; border-radius: 1px; opacity: 0; transition: opacity 400ms var(--ease), transform 400ms var(--ease); }
+.lanes-txt .beat::before, .lanes-txt .beat::after { content: ''; position: absolute; left: -12px; top: 4px; bottom: 4px; width: 2px; border-radius: 1px; opacity: 0; transition: opacity 400ms var(--ease), transform 400ms var(--ease); }
 .lanes-txt .ticks .beat::before, .lanes-txt .ticks .beat::after { top: 14px; bottom: 14px; }
 .lanes-txt .beat::before { background: var(--hair); }
 .lanes-txt .beat::after { background: var(--accent); transform-origin: top; transform: scaleY(0); }
@@ -114,9 +114,10 @@
 /* Each picture covers the whole group (4 bar heights tall, full width) and is shifted back by its
    bar's offset, so the three bars read as one frame. Offsets follow site.css: margins of 3h and
    1.5h times the slope, rows 1.5h apart, the middle bar 62% wide. */
-.day-bars { overflow: clip; }
+/* On a phone the bars are short; each picture is shown closer, at the part that matters. */
+.day-bars { overflow: clip; --h: 24vw; }
 .day-bars .bar { transition: opacity 600ms var(--ease); }
-.day-bars .bar img { inset: auto; max-width: none; height: calc(var(--h) * 4); object-position: var(--pos, 0 0); --wo: calc(var(--h) * 4 * var(--slope)); }
+.day-bars .bar img { inset: auto; max-width: none; height: calc(var(--h) * 4); object-position: var(--pos, 0 0); --wo: calc(var(--h) * 4 * var(--slope)); transform: scale(1.3); transform-origin: var(--pos, 0 0); }
 .day-bars .bar:nth-child(1) img { top: 0; left: calc(var(--h) * -3 * var(--slope)); width: calc(100% + var(--h) * 3 * var(--slope)); }
 .day-bars .bar:nth-child(2) img { top: calc(var(--h) * -1.5); left: calc(var(--h) * -1.5 * var(--slope)); width: calc(100% / 0.62); }
 .day-bars .bar:nth-child(3) img { top: calc(var(--h) * -3); left: 0; width: calc(100% + var(--h) * 3 * var(--slope)); }
@@ -135,11 +136,11 @@
 .day.auto .day-cols .cell.on::before { transform: scaleX(0); animation: cap-line var(--every, 5200ms) linear forwards; }
 .day:not(.seen) .day-cols .cell.on::before { animation-play-state: paused; }
 
-@media (max-width: 720px) {
-  /* On a phone the bars are short; look closer at the part of each picture that matters. */
-  .day-bars { --h: 24vw; }
-  .day-bars .bar img { transform: scale(1.3); transform-origin: var(--pos, 0 0); }
-  .lanes-txt .beat::before, .lanes-txt .beat::after { left: -12px; }
+@media (min-width: 721px) {
+  /* The bar height from site.css's .bars, at full scale. */
+  .day-bars { --h: clamp(76px, 12.4vw, 200px); }
+  .day-bars .bar img { transform: none; transform-origin: 50% 50%; }
+  .lanes-txt .beat::before, .lanes-txt .beat::after { left: -22px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

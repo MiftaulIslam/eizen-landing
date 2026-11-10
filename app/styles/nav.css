@@ -29,19 +29,6 @@
 /* Applied for one frame when the page opens already scrolled, so the bar starts in place. */
 .top.still::before, .top.still::after, .top.still > .wrap > *, .top.still .mega { transition: none !important; }
 
-@media (min-width: 1081px) {
-  .top { --bx: max(16px, (100% - var(--bar)) / 2); }
-  .top > .wrap { container-type: inline-size; --shift: calc((100cqw - var(--bar)) / 2 + 22px); }
-  .top.float::before { clip-path: inset(10px var(--bx) 10px var(--bx) round 14px); }
-  .top.float::after { clip-path: inset(11px calc(var(--bx) + 1px) 11px calc(var(--bx) + 1px) round 13px); }
-  .top.float > .wrap > .brand, .top.float > .wrap > .nav { translate: var(--shift) 0; }
-  .top.float > .wrap > .top-cta { translate: calc(var(--shift) * -1) 0; }
-
-  /* The Product panel hangs under the floating bar as a card of the same width. */
-  .top.float .mega { left: var(--bx); right: var(--bx); top: calc(100% - 4px); border: 1px solid var(--hair); border-radius: 14px; overflow: hidden; }
-  .top.float .mega .wrap { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); padding: 24px 24px 28px; gap: 28px; }
-}
-
 /* The menu: a pill follows the pointer or keyboard focus and rests on the current page. */
 .navmenu { position: relative; isolation: isolate; }
 .nav-pill {
@@ -103,101 +90,115 @@
 @keyframes nav-in { from { opacity: 0; translate: 0 8px; } }
 @keyframes nav-fade { from { opacity: 0; } }
 
-/* Phone menu: a sheet that slides up from the bottom over a dimmed page. Its links arrive in order. */
-.drawer-scrim { display: none; }
-@media (max-width: 1080px) {
-  .top { --sheet: cubic-bezier(0.32, 0.72, 0, 1); }
-  .drawer-scrim {
-    display: block;
-    position: fixed;
-    inset: 0;
-    z-index: -2;
-    background: rgb(5 6 10 / 0.62);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 320ms var(--ease), visibility 0s 320ms;
-  }
-  .top.open-menu .drawer-scrim { opacity: 1; visibility: visible; transition: opacity 360ms var(--ease), visibility 0s; }
-
-  .top .drawer {
-    position: fixed;
-    inset: auto 0 0 0;
-    height: calc(100dvh - var(--head) - 10px);
-    display: flex;
-    flex-direction: column;
-    padding: 10px var(--gutter) 0;
-    background: var(--n1);
-    border-top: 1px solid var(--hair);
-    border-radius: 20px 20px 0 0;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    opacity: 1;
-    visibility: hidden;
-    translate: 0 100%;
-    transition: translate 420ms var(--sheet), visibility 0s 420ms;
-  }
-  .top.open-menu .drawer { translate: 0 0; visibility: visible; transition: translate 520ms var(--sheet), visibility 0s; }
-
-  .drawer-grip { flex: none; align-self: center; width: 40px; height: 4px; margin-bottom: 18px; border-radius: 4px; background: var(--hair); }
-  .drawer-kick { margin: 6px 0 10px; font: 400 12px/1.4 var(--mono); color: var(--fg3); }
-  .drawer-kick + .drawer-grid, .drawer-kick + .drawer-list { margin-bottom: 22px; }
-
-  .top .drawer .drawer-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-  .top .drawer .drawer-grid a {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding: 14px 14px 13px;
-    border: 1px solid var(--hair);
-    border-radius: 12px;
-    background: rgb(238 240 245 / 0.03);
-    font: inherit;
-    letter-spacing: 0;
-    transition: background 180ms var(--ease), border-color 180ms var(--ease);
-  }
-  .drawer-grid b { font: 400 21px/1.15 var(--serif); letter-spacing: -0.01em; color: var(--fg); }
-  .drawer-grid span { font-size: 13px; line-height: 1.35; color: var(--fg3); }
-  .top .drawer .drawer-grid a[aria-current='page'] { border-color: rgb(232 85 61 / 0.6); }
-  .top .drawer .drawer-grid a:active { background: rgb(238 240 245 / 0.08); }
-
-  .top .drawer .drawer-list a {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 13px 2px;
-    border-bottom: 1px solid var(--hair);
-    font: 340 26px/1.2 var(--serif);
-    letter-spacing: -0.014em;
-  }
-  .drawer-list a:first-child { border-top: 1px solid var(--hair); }
-  .drawer-list .ar { width: 11px; height: 15px; color: var(--fg3); }
-  .top .drawer .drawer-list a[aria-current='page'] { color: var(--lamp); }
-
-  /* The download button stays at the bottom of the sheet. */
-  .drawer-foot {
-    position: sticky;
-    bottom: 0;
-    margin-top: auto;
-    padding: 14px 0 calc(16px + env(safe-area-inset-bottom));
-    background: var(--n1);
-    border-top: 1px solid var(--hair);
-  }
-  .top .drawer a.drawer-cta { display: flex; width: 100%; min-height: 52px; margin: 0; padding: 0 20px; justify-content: center; border: 0; font: 500 16px/1 var(--sans); letter-spacing: 0; }
-
-  .top.open-menu .drawer-grid > a, .top.open-menu .drawer-list > a { animation: nav-in 460ms var(--bar-ease) both; animation-delay: calc(140ms + var(--i, 0) * 28ms); }
-  .top.open-menu .drawer-kick, .top.open-menu .drawer-foot { animation: nav-fade 400ms var(--ease) 160ms both; }
-
-  /* Menu button: two lines that turn into a cross. */
-  .menu-btn { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 6px; }
-  .menu-ico { position: relative; width: 18px; height: 10px; }
-  .menu-ico i { position: absolute; left: 0; right: 0; height: 1.5px; border-radius: 2px; background: currentColor; transition: translate 300ms var(--bar-ease), rotate 300ms var(--bar-ease); }
-  .menu-ico i:first-child { top: 0; }
-  .menu-ico i:last-child { bottom: 0; }
-  .top.open-menu .menu-ico i:first-child { translate: 0 4.25px; rotate: 45deg; }
-  .top.open-menu .menu-ico i:last-child { translate: 0 -4.25px; rotate: -45deg; }
+/* Phone menu: a sheet that slides up from the bottom over a dimmed page. Its links arrive in order.
+   Mobile first: the sheet and the menu button are the base; from 1081px the bar shows the links instead. */
+.top { --sheet: cubic-bezier(0.32, 0.72, 0, 1); }
+.drawer-scrim {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: rgb(5 6 10 / 0.62);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 320ms var(--ease), visibility 0s 320ms;
 }
-@media (max-width: 380px) {
-  .top .drawer .drawer-grid { grid-template-columns: minmax(0, 1fr); }
+.top.open-menu .drawer-scrim { opacity: 1; visibility: visible; transition: opacity 360ms var(--ease), visibility 0s; }
+
+.top .drawer {
+  position: fixed;
+  inset: auto 0 0 0;
+  height: calc(100dvh - var(--head) - 10px);
+  display: flex;
+  flex-direction: column;
+  padding: 10px var(--gutter) 0;
+  background: var(--n1);
+  border-top: 1px solid var(--hair);
+  border-radius: 20px 20px 0 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  opacity: 1;
+  visibility: hidden;
+  translate: 0 100%;
+  transition: translate 420ms var(--sheet), visibility 0s 420ms;
+}
+.top.open-menu .drawer { translate: 0 0; visibility: visible; transition: translate 520ms var(--sheet), visibility 0s; }
+
+.drawer-grip { flex: none; align-self: center; width: 40px; height: 4px; margin-bottom: 18px; border-radius: 4px; background: var(--hair); }
+.drawer-kick { margin: 6px 0 10px; font: 400 12px/1.4 var(--mono); color: var(--fg3); }
+.drawer-kick + .drawer-grid, .drawer-kick + .drawer-list { margin-bottom: 22px; }
+
+.top .drawer .drawer-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+.top .drawer .drawer-grid a {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 14px 13px;
+  border: 1px solid var(--hair);
+  border-radius: 12px;
+  background: rgb(238 240 245 / 0.03);
+  font: inherit;
+  letter-spacing: 0;
+  transition: background 180ms var(--ease), border-color 180ms var(--ease);
+}
+.drawer-grid b { font: 400 21px/1.15 var(--serif); letter-spacing: -0.01em; color: var(--fg); }
+.drawer-grid span { font-size: 13px; line-height: 1.35; color: var(--fg3); }
+.top .drawer .drawer-grid a[aria-current='page'] { border-color: rgb(232 85 61 / 0.6); }
+.top .drawer .drawer-grid a:active { background: rgb(238 240 245 / 0.08); }
+
+.top .drawer .drawer-list a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 2px;
+  border-bottom: 1px solid var(--hair);
+  font: 340 26px/1.2 var(--serif);
+  letter-spacing: -0.014em;
+}
+.drawer-list a:first-child { border-top: 1px solid var(--hair); }
+.drawer-list .ar { width: 11px; height: 15px; color: var(--fg3); }
+.top .drawer .drawer-list a[aria-current='page'] { color: var(--lamp); }
+
+/* The download button stays at the bottom of the sheet. */
+.drawer-foot {
+  position: sticky;
+  bottom: 0;
+  margin-top: auto;
+  padding: 14px 0 calc(16px + env(safe-area-inset-bottom));
+  background: var(--n1);
+  border-top: 1px solid var(--hair);
+}
+.top .drawer a.drawer-cta { display: flex; width: 100%; min-height: 52px; margin: 0; padding: 0 20px; justify-content: center; border: 0; font: 500 16px/1 var(--sans); letter-spacing: 0; }
+
+.top.open-menu .drawer-grid > a, .top.open-menu .drawer-list > a { animation: nav-in 460ms var(--bar-ease) both; animation-delay: calc(140ms + var(--i, 0) * 28ms); }
+.top.open-menu .drawer-kick, .top.open-menu .drawer-foot { animation: nav-fade 400ms var(--ease) 160ms both; }
+
+/* Menu button: two lines that turn into a cross. */
+.menu-btn { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 6px; }
+.menu-ico { position: relative; width: 18px; height: 10px; }
+.menu-ico i { position: absolute; left: 0; right: 0; height: 1.5px; border-radius: 2px; background: currentColor; transition: translate 300ms var(--bar-ease), rotate 300ms var(--bar-ease); }
+.menu-ico i:first-child { top: 0; }
+.menu-ico i:last-child { bottom: 0; }
+.top.open-menu .menu-ico i:first-child { translate: 0 4.25px; rotate: 45deg; }
+.top.open-menu .menu-ico i:last-child { translate: 0 -4.25px; rotate: -45deg; }
+
+@media (min-width: 381px) {
+  .top .drawer .drawer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1081px) {
+  /* The links sit in the bar; the phone menu, its button and its scrim are gone. */
+  .menu-btn, .drawer-scrim, .top .drawer { display: none; }
+
+  .top { --bx: max(16px, (100% - var(--bar)) / 2); }
+  .top > .wrap { container-type: inline-size; --shift: calc((100cqw - var(--bar)) / 2 + 22px); }
+  .top.float::before { clip-path: inset(10px var(--bx) 10px var(--bx) round 14px); }
+  .top.float::after { clip-path: inset(11px calc(var(--bx) + 1px) 11px calc(var(--bx) + 1px) round 13px); }
+  .top.float > .wrap > .brand, .top.float > .wrap > .nav { translate: var(--shift) 0; }
+  .top.float > .wrap > .top-cta { translate: calc(var(--shift) * -1) 0; }
+
+  /* The Product panel hangs under the floating bar as a card of the same width. */
+  .top.float .mega { left: var(--bx); right: var(--bx); top: calc(100% - 4px); border: 1px solid var(--hair); border-radius: 14px; overflow: hidden; }
+  .top.float .mega .wrap { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); padding: 24px 24px 28px; gap: 28px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .top .drawer, .top.open-menu .drawer { transition: visibility 0s; }

@@ -32,7 +32,8 @@
 .fs-item.on .fs-icon { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 50%, transparent); background: color-mix(in srgb, var(--accent) 9%, transparent); }
 .fs-item p { margin-top: 10px; }
 
-.fs-side { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
+.fs-side { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
+.fs-side .fs-stage { order: -1; }
 .fs-side .fs-item { padding: 18px 0 20px; }
 .fs-side .fs-item p { font-size: 15px; }
 
@@ -105,7 +106,8 @@
 
 /* Connections orbit (components/parts/Orbit.tsx): icons, and pulses from the mark to a service */
 .orbit .sat { pointer-events: none; }
-.orbit .tag { display: inline-flex; align-items: center; gap: 7px; padding: 5px 10px 5px 8px; pointer-events: auto; cursor: default; transition: scale 240ms var(--ease), border-color 240ms var(--ease), background-color 240ms var(--ease); }
+/* On phones the tags are icons only; names and "got" labels come in from 601px. */
+.orbit .tag { display: inline-flex; align-items: center; gap: 7px; padding: 6px; pointer-events: auto; cursor: default; transition: scale 240ms var(--ease), border-color 240ms var(--ease), background-color 240ms var(--ease); }
 .orbit .tag .svc-ic { width: 16px; height: 16px; color: var(--fg2); transition: color 300ms var(--ease); }
 .orbit .tag::before { content: ''; position: absolute; inset: -1px; border: 1px solid var(--lamp); border-radius: inherit; opacity: 0; pointer-events: none; }
 .orbit .tag:hover { scale: 1.08; background: var(--n2); border-color: rgb(238 240 245 / 0.32); }
@@ -113,7 +115,8 @@
 .orbit:has(.tag:hover) .ring, .orbit:has(.tag:hover) .tag { animation-play-state: paused; }
 .orbit .ring:not(.spokes):has(.ping) { z-index: 1; }
 .orbit .ring:has(.tag:hover), .orbit .sat:has(.tag:hover) { z-index: 2; }
-.orbit .got { position: absolute; left: 50%; top: calc(100% + 6px); translate: -50% 0; padding: 2px 7px; border-radius: 5px; background: var(--n0); border: 1px solid var(--hair); font: 400 11px/1.5 var(--mono); color: var(--fg); white-space: nowrap; opacity: 0; transform: translateY(-3px); pointer-events: none; }
+.orbit .nm { display: none; }
+.orbit .got { display: none; position: absolute; left: 50%; top: calc(100% + 6px); translate: -50% 0; padding: 2px 7px; border-radius: 5px; background: var(--n0); border: 1px solid var(--hair); font: 400 11px/1.5 var(--mono); color: var(--fg); white-space: nowrap; opacity: 0; transform: translateY(-3px); pointer-events: none; }
 .orbit .tag:hover .got { opacity: 1; transform: none; }
 .orbit .tag[data-side='l'] .got { left: 0; translate: none; }
 .orbit .tag[data-side='r'] .got { left: auto; right: 0; translate: none; }
@@ -148,14 +151,14 @@
 @keyframes o-got { 0%, 30% { opacity: 0; transform: translateY(-3px); } 40%, 80% { opacity: 1; transform: none; } 100% { opacity: 0; transform: none; } }
 @keyframes o-beat { 0% { opacity: 0.9; transform: scale(1); } 100% { opacity: 0; transform: scale(1.16); } }
 
-@media (max-width: 1080px) {
-  .fs-side { grid-template-columns: minmax(0, 1fr); }
-  .fs-side .fs-stage { order: -1; }
+@media (min-width: 601px) {
+  .orbit .tag { padding: 5px 10px 5px 8px; }
+  .orbit .nm { display: inline; }
+  .orbit .got { display: block; }
 }
-@media (max-width: 600px) {
-  .orbit .tag { padding: 6px; }
-  .orbit .tag .svc-ic { width: 16px; height: 16px; }
-  .orbit .nm, .orbit .got { display: none; }
+@media (min-width: 1081px) {
+  .fs-side { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+  .fs-side .fs-stage { order: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .fs-pane, .fs-pane.on, .fs-bar, .fs-icon, .fs-item h3 { transition: none; }
