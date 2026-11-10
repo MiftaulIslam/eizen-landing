@@ -135,6 +135,10 @@ html .paper .btn.line.btn:is(.is-wet, :focus-visible, :hover) {
   pointer-events: none;
 }
 a.lnk:hover { border-color: var(--hair); }
+/* On touch screens the link is 44px tall to tap, with nothing drawn. */
+@media (pointer: coarse) {
+  .lnk::before { content: ""; position: absolute; inset: -8px -4px; }
+}
 
 .arw {
   position: relative;
