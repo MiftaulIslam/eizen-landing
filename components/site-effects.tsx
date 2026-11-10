@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { start as startButtons } from "@/lib/effects/buttons";
+import { start as startDrawer } from "@/lib/effects/drawer";
 import { start as startFaq } from "@/lib/effects/faq";
 import { start as startHome } from "@/lib/effects/home";
 import { start as startInteract } from "@/lib/effects/interact";
@@ -17,7 +18,7 @@ export function SiteEffects() {
     const scope = createScope();
     startSite(scope);
     startLive(scope);
-    for (const start of [startNav, startReveal, startButtons, startHome, startInteract, startFaq]) start(scope);
+    for (const start of [startNav, startReveal, startButtons, startHome, startInteract, startFaq, startDrawer]) start(scope);
     return () => scope.stop();
   }, []);
   return null;

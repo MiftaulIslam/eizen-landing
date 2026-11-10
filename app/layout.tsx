@@ -9,6 +9,7 @@ import "./styles/buttons.css";
 import "./styles/home.css";
 import "./styles/interact.css";
 import "./styles/faq.css";
+import "./styles/drawer.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
