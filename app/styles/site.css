@@ -84,6 +84,7 @@ code, .code { font: 400 0.88em/1.5 var(--mono); }
 .top.solid, .top.open-menu { background: rgb(11 13 20 / 0.94); border-color: var(--hair); }
 .top .wrap { display: flex; align-items: center; gap: 32px; height: 100%; }
 .brand { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 600; letter-spacing: -0.015em; }
+.top .brand { min-height: 44px; }
 .brand svg { width: 26px; height: 26px; }
 .brand .m-lamp { fill: var(--lamp); }
 .brand .m { fill: currentColor; }
@@ -120,7 +121,7 @@ code, .code { font: 400 0.88em/1.5 var(--mono); }
 .full .copy { max-width: 760px; }
 .full.center { justify-content: center; }
 .full.center .inner { padding-bottom: 48px; }
-.vid-toggle { position: absolute; right: var(--gutter); bottom: 24px; z-index: 2; font: 400 12px/1 var(--mono); color: #cfd3de; padding: 8px 10px; border-radius: 6px; background: rgb(7 8 13 / 0.5); transition: color 160ms var(--ease); }
+.vid-toggle { position: absolute; right: var(--gutter); bottom: 24px; z-index: 2; font: 400 13px/1 var(--mono); color: #cfd3de; padding: 8px 10px; border-radius: 6px; background: rgb(7 8 13 / 0.5); transition: color 160ms var(--ease); }
 .vid-toggle:hover { color: #fff; }
 
 .hero { position: relative; isolation: isolate; color: #eef0f5; background: var(--n1); --fg: #eef0f5; --fg2: #d2d6e0; --fg3: #a9afbf; --hair: rgb(238 240 245 / 0.2); --accent: var(--lamp); }
@@ -253,7 +254,7 @@ code, .code { font: 400 0.88em/1.5 var(--mono); }
 .tbl.stack-m thead { display: none; }
 .tbl.stack-m tr { padding-block: 16px; border-top: 1px solid var(--hair); }
 .tbl.stack-m th, .tbl.stack-m td { border: 0; padding: 4px 0; }
-.tbl.stack-m td::before { content: attr(data-l); display: block; font: 400 12px/1.5 var(--mono); color: var(--fg3); }
+.tbl.stack-m td::before { content: attr(data-l); display: block; font: 400 13px/1.5 var(--mono); color: var(--fg3); }
 
 /* Ticker of connections, the one thing here that moves on its own without a reason to stop */
 .ticker { overflow: hidden; border-block: 1px solid var(--hair); }
@@ -311,6 +312,7 @@ code, .code { font: 400 0.88em/1.5 var(--mono); }
 
 @media (min-width: 721px) {
   body { font-size: 17px; }
+  .vid-toggle { font-size: 12px; }
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .index a { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr) 20px; }
   .index .s { grid-column: auto; grid-row: auto; }
@@ -355,7 +357,15 @@ code, .code { font: 400 0.88em/1.5 var(--mono); }
   .spot { display: block; }
   .spot-list { display: none; }
 }
+/* Touch screens: every control is at least 44px to tap. Most get an invisible hit area around
+   them so nothing moves; footer links become full rows. */
 @media (pointer: coarse) {
+  .foot li { margin-top: 0; }
+  .foot li a { display: flex; align-items: center; min-height: 44px; }
+  .foot .brand { padding-block: 7px; margin-block: -7px; }
+  .cycle-caps { row-gap: 11px; }
+  .cycle-caps button::before { content: ''; position: absolute; inset: -6px -7px; }
+  .vid-toggle::before { content: ''; position: absolute; inset: -8px; }
   .peek { display: none; }
   .index .thumb { display: block; grid-column: 1 / -1; width: 100%; max-height: 180px; object-fit: cover; object-position: top left; border-radius: 8px; border: 1px solid var(--hair); }
 }

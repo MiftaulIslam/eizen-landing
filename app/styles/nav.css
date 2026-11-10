@@ -125,7 +125,7 @@
 .top.open-menu .drawer { translate: 0 0; visibility: visible; transition: translate 520ms var(--sheet), visibility 0s; }
 
 .drawer-grip { flex: none; align-self: center; width: 40px; height: 4px; margin-bottom: 18px; border-radius: 4px; background: var(--hair); }
-.drawer-kick { margin: 6px 0 10px; font: 400 12px/1.4 var(--mono); color: var(--fg3); }
+.drawer-kick { margin: 6px 0 10px; font: 400 13px/1.4 var(--mono); color: var(--fg3); }
 .drawer-kick + .drawer-grid, .drawer-kick + .drawer-list { margin-bottom: 22px; }
 
 .top .drawer .drawer-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }

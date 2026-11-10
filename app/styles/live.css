@@ -340,6 +340,13 @@
 @media (min-width: 1321px) {
   .hero-cards { display: grid; }
 }
+/* Touch screens: 44px targets without moving anything. */
+@media (pointer: coarse) {
+  .mx button::before { content: ''; position: absolute; inset: -12px -4px; }
+  .dl-btns button, .dl-end button { position: relative; }
+  .dl-btns button::before, .dl-end button::before { content: ''; position: absolute; inset: -6px -2px; }
+  .nd-range input { height: 44px; margin-block: -14px; }
+}
 @media (prefers-reduced-motion: reduce) {
   .orbit .ring, .orbit .tag, .wave i, .flow { animation: none !important; }
 }
